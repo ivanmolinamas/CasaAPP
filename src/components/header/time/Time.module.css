@@ -1,0 +1,9 @@
+.containerDate{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.date{
+    color: var(--text_color);
+    margin-right: 1rem;
+}

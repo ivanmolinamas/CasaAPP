@@ -1,0 +1,17 @@
+.container {
+    width: 10rem;
+    height: 100%;
+    background-color: var(--btn_nav_color);
+    text-align: center;
+    align-content: center;
+    color: var(--text_color);
+  }
+  
+  .container:hover {
+      background-color: var(--btn_nav_hover_color);
+  }
+  
+  .active{
+      background-color: var(--btn_nav_hover_color); 
+  }
+  

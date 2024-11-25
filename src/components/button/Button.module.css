@@ -1,0 +1,11 @@
+.button{
+    background-color: aquamarine;
+    width: 8rem;
+    height: 2rem;
+    border: 0px;
+    border-radius: 5px;
+    color: black;
+}
+.button:hover{
+    background-color: #60d1ab;
+}

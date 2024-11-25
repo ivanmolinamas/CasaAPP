@@ -1,0 +1,18 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg_nav_color)
+}
+.logo{
+    height: 5rem;
+    width: 5rem;
+}
+.logoMark{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #60d1ab;
+    font-size: 1.2rem;
+}
