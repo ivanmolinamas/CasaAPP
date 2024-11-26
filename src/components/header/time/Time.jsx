@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import classes from "./Time.module.css";
 
+
+/**
+ * Componente que muestra la hora y fecha actual
+ * @returns 
+ */
 function Reloj() {
   // Estado para almacenar la hora actual
   const [hora, setHora] = useState("");
@@ -12,8 +17,9 @@ function Reloj() {
   ];
 
 
+  // se usan dos funciones para en CSS poder aplicar mejor como organizarlo
   useEffect(() => {
-    // Función para actualizar la hor
+    // Función para actualizar la hora
     const actualizarHora = () => {
       const fecha = new Date();
       const horas = String(fecha.getHours()).padStart(2, "0");
@@ -22,6 +28,7 @@ function Reloj() {
       setHora(`${horas}:${minutos}`);
     };
 
+    // Funcion para actualiar el dia
     const actualizarDia = () => {
         const fecha = new Date();
         const dia = String(fecha.getDate()).padStart(2, "0");

@@ -1,6 +1,4 @@
 import classes from "./Header.module.css";
-import * as React from "react";
-import Button from "../button/Button";
 import Nav from "./nav/Nav";
 import Time from "./Time/Time";
 
