@@ -1,0 +1,50 @@
+.container{
+    width: 18rem;
+    height: 8rem;
+	padding: 1rem;
+	background-color: rgba(94, 100, 102, 0.541);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.Root {
+	all: unset;
+	width: 83px;
+	height: 50px;
+	background-color: var(--black-a9);
+	border-radius: 9999px;
+	position: relative;
+	box-shadow: 0 2px 10px var(--black-a7);
+	-webkit-tap-highlight-color: rgba(106, 231, 34, 0);
+	&:focus {
+		box-shadow: 0 0 0 2px black;
+	}
+	&[data-state="checked"] {
+		background-color: var(--greenOnColor);
+	}
+}
+
+.Thumb {
+	display: block;
+	width: 45px;
+	height: 45px;
+	background-color: white;
+	border-radius: 9999px;
+	box-shadow: 0 2px 2px var(--black-a7);
+	transition: transform 100ms;
+	transform: translateX(2px);
+	will-change: transform;
+	&[data-state="checked"] {
+		transform: translateX(36px);
+	}
+}
+
+.Label {
+	color: white;
+	font-size: 15px;
+	line-height: 1;
+	user-select: none;
+}

@@ -24,7 +24,3 @@ export default function Layout() {
     </main>
   );
 }
-
-// TO DO instalar react routes
-
-// crear carpeta pages?? mirar como usar react routes

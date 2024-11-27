@@ -1,6 +1,6 @@
 import classes from "./NavButton.module.css";
 import { Link } from "react-router-dom";
-
+import { Text } from "@radix-ui/themes";
 /**
  * Boton para navegar entre las paginas
  * @param {object} props - Props que se le pasan al componente
@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function NavButton({ texto, ruta }) {
     return (
         <Link to={ruta} className={classes.container}>
-            <p>{texto}</p>
+            <Text>{texto}</Text>
         </Link>
     )
 
