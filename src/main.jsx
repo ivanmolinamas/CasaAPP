@@ -9,7 +9,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Theme appearance="dark" accentColor="jade" grayColor="sage" radius="large">
       <App />
-     <ThemePanel />
+
     </Theme>
   </StrictMode>
 );

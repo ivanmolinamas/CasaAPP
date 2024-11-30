@@ -1,5 +1,5 @@
 .buttonContainer{
-    height: 8.5vh;
+    height: 6rem;
     display: flex;
     flex-direction: row;
     gap: 1rem;

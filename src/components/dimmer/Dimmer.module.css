@@ -1,0 +1,55 @@
+.container{
+    width: 15rem;
+    height: 8rem;
+	padding: 1rem;
+	background-color: rgba(94, 100, 102, 0.541);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.Root {
+	position: relative;
+	display: flex;
+	align-items: center;
+	user-select: none;
+	touch-action: none;
+	width: 13rem;
+	height: 20px;
+}
+.form{
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+.info{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+.Track {
+	background-color: var(--black-a10);
+	position: relative;
+	flex-grow: 1;
+	border-radius: 9999px;
+	height: 10px;
+}
+
+.Range {
+	position: absolute;
+	background-color: var(--greenOnColor);
+	border-radius: 9999px;
+	height: 100%;
+}
+
+.Thumb {
+	display: block;
+	width: 30px;
+	height: 30px;
+	background-color: white;
+	box-shadow: 0 2px 10px var(--black-a7);
+	border-radius: 15px;
+	cursor: pointer;
+}

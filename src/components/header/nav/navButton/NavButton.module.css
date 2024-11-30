@@ -5,6 +5,7 @@
     text-align: center;
     align-content: center;
     color: var(--text_color);
+    text-decoration: none;
   }
   
   .container:hover {

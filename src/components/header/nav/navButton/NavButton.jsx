@@ -10,12 +10,10 @@ import { Text } from "@radix-ui/themes";
  */
 function NavButton({ texto, ruta }) {
     return (
-        <Link to={ruta} className={classes.container}>
-            <Text>{texto}</Text>
+        <Link to={ruta} className={classes.container} >
+            {texto}
         </Link>
     )
-
-
 }
 
 
