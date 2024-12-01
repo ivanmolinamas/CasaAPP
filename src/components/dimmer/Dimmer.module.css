@@ -42,6 +42,7 @@
 	background-color: var(--greenOnColor);
 	border-radius: 9999px;
 	height: 100%;
+	cursor: pointer;
 }
 
 .Thumb {

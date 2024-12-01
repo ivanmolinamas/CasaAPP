@@ -29,13 +29,13 @@ export default function Dashboard() {
           >
             <Heading size="5">Interruptores</Heading>
             <Grid columns="2" gap="2">
-              <SwitchComp idName={"Oficina"}  deviceId={65537} />
-              <SwitchComp idName={"Lampara Cris"} deviceId={65550} />
-              <SwitchComp idName={"Lampara Iván"} deviceId={65551} />
+              <SwitchComp idName={"Oficina"}  deviceID={65537} />
+              <SwitchComp idName={"Lampara Cris"} deviceID={65550} />
+              <SwitchComp idName={"Lampara Iván"} deviceID={65551} />
               <SwitchComp idName={"luz 4"} />
             </Grid>
 
-            <Dimmer idName={"dimmer 1"} />
+            <Dimmer idName={"Oficina"} deviceID={65537} />
           </Flex>
         </Box>
 
