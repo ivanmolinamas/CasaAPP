@@ -5,7 +5,7 @@ export async function statusDimmer(bulbId) {
       throw new Error("Error al obtener el estado de la bombilla");
     }
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
     return data.dimmer; // Devuelve true si está encendida, false si no
   } catch (error) {
     console.error("Error en obtener valor dimmer:", error);

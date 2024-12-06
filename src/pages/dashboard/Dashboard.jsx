@@ -4,8 +4,28 @@ import TermoInfo from "../../components/termoInfo/TermoInfo";
 import ButtonRa from "../../components/button/ButtonRa";
 import classes from "./Dashboard.module.css";
 import { Heading, Grid, Box, Flex } from "@radix-ui/themes";
+import { io } from "socket.io-client";
+import { useEffect } from "react";
+
+
+//importamos socket io
+const socket = io("http://localhost:4000");
+
 
 export default function Dashboard() {
+
+  
+useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Conectado al servidor");
+    });
+
+    return () => {
+      socket.off("connect");
+    };
+  }, [])
+  
+
   return (
     <div className={classes.container}>
       <Grid columns="3" p="2">
@@ -32,7 +52,7 @@ export default function Dashboard() {
               <SwitchComp idName={"Oficina"}  deviceID={65537} />
               <SwitchComp idName={"Lampara Cris"} deviceID={65550} />
               <SwitchComp idName={"Lampara Iván"} deviceID={65551} />
-              <SwitchComp idName={"luz 4"} />
+              <SwitchComp idName={"Mesa 1"} deviceID={65562}/>
             </Grid>
 
             <Dimmer idName={"Oficina"} deviceID={65537} />
