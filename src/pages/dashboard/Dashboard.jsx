@@ -26,8 +26,7 @@ export default function Dashboard() {
     };
   }, []);
 
-
-console.log(devices);
+  console.log(devices);
 
   return (
     <div className={classes.container}>
@@ -75,6 +74,16 @@ console.log(devices);
             </Grid>
 
             <Dimmer idName={"Oficina"} deviceID={65537} />
+            {Object.values(devices.lights).map(
+              (device) =>
+                device.dimable ? ( // Si es "dimable", renderiza el componente
+                  <Dimmer
+                    idName={device.name}
+                    deviceID={device.id}
+                    key={device.id} // Es importante añadir una "key" única al iterar en React
+                  />
+                ) : null // Si no es "dimable", no renderiza nada
+            )}
           </Flex>
         </Box>
 
