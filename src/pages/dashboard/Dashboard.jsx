@@ -4,39 +4,42 @@ import TermoInfo from "../../components/termoInfo/TermoInfo";
 import ButtonRa from "../../components/button/ButtonRa";
 import classes from "./Dashboard.module.css";
 import { Heading, Grid, Box, Flex } from "@radix-ui/themes";
-import { io } from "socket.io-client";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import { socket, connectSocket } from "../../services/socketService";
+import { getDevicesState } from "../../services/deviceService";
 
 //importamos socket io
-const socket = io("http://localhost:4000");
-
+//const socket = io("http://localhost:4000");
 
 export default function Dashboard() {
+  // estado de los dispositivos importados desde el backend
+  const [devices, setDevices] = useState({ lights: [], plugs: [] });
 
-  
-useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Conectado al servidor");
-    });
+  // conectamos al backend para obtener la lista de dispositivos y añadirla al useState
+  useEffect(() => {
+    connectSocket(); // Inicia la conexión de Socket.IO
+    getDevicesState(setDevices); // Escucha los cambios en los dispositivos
 
     return () => {
-      socket.off("connect");
+      // Limpiar el listener al desmontar
+      socket.off("devicesState");
     };
-  }, [])
-  
+  }, []);
+
+
+console.log(devices);
 
   return (
     <div className={classes.container}>
       <Grid columns="3" p="2">
         <Box p="2" size="3">
-        <Flex direction="column" gap="2" size="3" justify="center">
-          <Heading size="5">Escenas personales</Heading>
-          <ButtonRa texto={"Escena 1"} />
-          <ButtonRa texto={"Escena 2"} />
-          <ButtonRa texto={"Escena 3"} />
-          <ButtonRa texto={"Escena 4"} />
-        </Flex>
+          <Flex direction="column" gap="2" size="3" justify="center">
+            <Heading size="5">Escenas personales</Heading>
+            <ButtonRa texto={"Escena 1"} />
+            <ButtonRa texto={"Escena 2"} />
+            <ButtonRa texto={"Escena 3"} />
+            <ButtonRa texto={"Escena 4"} />
+          </Flex>
         </Box>
 
         <Box p="2" size="3">
@@ -49,10 +52,26 @@ useEffect(() => {
           >
             <Heading size="5">Interruptores</Heading>
             <Grid columns="2" gap="2">
-              <SwitchComp idName={"Oficina"}  deviceID={65537} />
+              {/**
+               * <SwitchComp idName={"Oficina"}  deviceID={65537} />
               <SwitchComp idName={"Lampara Cris"} deviceID={65550} />
               <SwitchComp idName={"Lampara Iván"} deviceID={65551} />
               <SwitchComp idName={"Mesa 1"} deviceID={65562}/>
+               */}
+
+              {Object.values(devices.lights).map(
+                (device) => (
+                  console.log(device),
+                  (
+                    <SwitchComp
+                      key={device.id}
+                      idName={device.name}
+                      deviceID={device.id}
+                      status={device.onOff}
+                    />
+                  )
+                )
+              )}
             </Grid>
 
             <Dimmer idName={"Oficina"} deviceID={65537} />
@@ -69,8 +88,8 @@ useEffect(() => {
           >
             <Heading size="5">Temperatura</Heading>
             <Grid columns="2" gap="2">
-            <TermoInfo idName={"Salón"} />
-            <TermoInfo idName={"Exterior"} />
+              <TermoInfo idName={"Salón"} />
+              <TermoInfo idName={"Exterior"} />
             </Grid>
           </Flex>
         </Box>
