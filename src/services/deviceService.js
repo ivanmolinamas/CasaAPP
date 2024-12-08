@@ -18,7 +18,7 @@ const toggleDevice = (id, onOff) => {
 };
 
 // Función para cambiar el estado de un dispositivo (encender o apagar)
-const dimmerDevice = (id, brightness) => {
+const setDimmerDevice = (id, brightness) => {
   socket.emit("dimmerDevice", { id, brightness });
 };
 
@@ -28,4 +28,4 @@ const toggleLight = (id) => {
 };
 
 
-export { getDevicesState, toggleDevice, toggleLight, dimmerDevice };
+export { getDevicesState, toggleDevice, toggleLight, setDimmerDevice };

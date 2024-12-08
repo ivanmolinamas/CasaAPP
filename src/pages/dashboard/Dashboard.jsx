@@ -80,9 +80,11 @@ export default function Dashboard() {
               (device) =>
                 device.dimable ? ( // Si es "dimable", renderiza el componente
                   <Dimmer
+                    key={device.id} // Es importante añadir una "key" única al iterar en React
                     idName={device.name}
                     deviceID={device.id}
-                    key={device.id} // Es importante añadir una "key" única al iterar en React
+                    dimmer={device.brightness}
+                    dimmerStatus={device.brightness}
                   />
                 ) : null // Si no es "dimable", no renderiza nada
             )}

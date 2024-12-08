@@ -1,15 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import classes from "./Dimmer.module.css";
 import { Heading } from "@radix-ui/themes";
 import * as Slider from "@radix-ui/react-slider";
-import { dimmerDevice as dimmer} from "../../services/deviceService";
+import { setDimmerDevice } from "../../services/deviceService";
 
-export default function Dimmer({ idName, deviceID }) {
-  const [value, setValue] = useState(50);
+export default function Dimmer({ idName, deviceID, dimmer,dimmerStatus }) {
+  const [value, setValue] = useState(dimmer);
+
+// useEffect para sincronizar el estado cuando el estado del dispositivo cambie desde el backend
+useEffect(() => {
+  setTimeout(() => {
+    setValue(dimmer); // Sincroniza el estado con el prop `deviceStatus`
+  }), 0
+}, [dimmer]); // El efecto se ejecutará cuando `deviceStatus` cambie
 
 function changeValue(newValue) {
-  setValue(newValue[0]);
-  dimmer(deviceID, newValue[0]);
+  setDimmerDevice(deviceID, newValue[0]); // actualiza el backend
+  //setValue(newValue[0]); //actualiza el valor local
 }
 
   return (
