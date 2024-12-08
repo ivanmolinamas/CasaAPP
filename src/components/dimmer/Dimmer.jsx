@@ -5,13 +5,12 @@ import * as Slider from "@radix-ui/react-slider";
 import { setDimmerDevice } from "../../services/deviceService";
 
 export default function Dimmer({ idName, deviceID, dimmer,dimmerStatus }) {
-  const [value, setValue] = useState(dimmer);
+  const [value, setValue] = useState(dimmer); // guardamos el valor del dimmer
+
 
 // useEffect para sincronizar el estado cuando el estado del dispositivo cambie desde el backend
 useEffect(() => {
-  setTimeout(() => {
     setValue(dimmer); // Sincroniza el estado con el prop `deviceStatus`
-  }), 0
 }, [dimmer]); // El efecto se ejecutará cuando `deviceStatus` cambie
 
 function changeValue(newValue) {
@@ -43,3 +42,6 @@ function changeValue(newValue) {
     </div>
   );
 }
+
+//Quizas mostrando el % que debe estar y luego enviar otro, y luego al segundo actualizar el heading value
+// es decir, no actuar el fb del rango para que haga cosas raras

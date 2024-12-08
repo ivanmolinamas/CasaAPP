@@ -3,24 +3,21 @@ import * as Switch from "@radix-ui/react-switch";
 import { Box, Heading, Flex } from "@radix-ui/themes";
 import { useState, useEffect } from "react";
 import { toggleDevice as toggle } from "../../services/deviceService";
+import PopoverColor from "../popover/PopoverColor";
 
-
-
-export default function SwitchComp({ idName, deviceID, status, deviceStatus }) {
+export default function SwitchComp({ idName, deviceID, status, deviceStatus , colorTemperature, spectrum }) {
   // guardamos el estado de la bombilla
   const [isOn, setIsOn] = useState(status);
 
-// useEffect para sincronizar el estado cuando el estado del dispositivo cambie desde el backend
-useEffect(() => {
-  setIsOn(deviceStatus); // Sincroniza el estado con el prop `deviceStatus`
-}, [deviceStatus]); // El efecto se ejecutará cuando `deviceStatus` cambie
+  // useEffect para sincronizar el estado cuando el estado del dispositivo cambie desde el backend
+  useEffect(() => {
+    setIsOn(deviceStatus); // Sincroniza el estado con el prop `deviceStatus`
+  }, [deviceStatus]); // El efecto se ejecutará cuando `deviceStatus` cambie
 
   const toggleDevice = (id) => {
     toggle(id); // Ejecutamos la función toggle y le pasamos la ID del componente
     setIsOn(!isOn); //somos optimistas y cambiamos el estado
   };
-
-
 
   return (
     <div className={classes.container}>
@@ -33,18 +30,21 @@ useEffect(() => {
             justify="center"
             align="center"
           >
-            <label
-              className={classes.Label}
-              htmlFor={idName}
-              style={{ paddingRight: 15 }}
-            >
-              <Heading size="2">{idName}</Heading>
-            </label>
+            <div className={classes.headerSwitch}>
+              <label
+                className={classes.Label}
+                htmlFor={idName}
+                style={{ paddingRight: 15 }}
+              >
+                <Heading size="2">{idName}</Heading>
+              </label>
+              {spectrum === "white" ? <PopoverColor deviceID={deviceID} colorTemperature={colorTemperature} /> : ""}
+            </div>
             <Switch.Root
               className={classes.Root}
               id={idName}
               onCheckedChange={() => toggleDevice(deviceID)}
-              checked={isOn} // usamos el estado 
+              checked={isOn} // usamos el estado
             >
               <Switch.Thumb className={classes.Thumb} />
             </Switch.Root>

@@ -4,7 +4,8 @@ import { socket } from "./socketService";
 // Función para obtener el estado de los dispositivos
 const getDevicesState = (setDevices) => {
   socket.on("devicesState", (data) => {
-    console.log(data);
+    //console.log(data);
+    console.log("Datos recibidos de backend")
     setDevices({
       lights: data.lights,
       plugs: data.plugs,
@@ -14,18 +15,22 @@ const getDevicesState = (setDevices) => {
 
 // Función para cambiar el estado de un dispositivo (encender o apagar)
 const toggleDevice = (id, onOff) => {
-  socket.emit("toggleDevice", { id, onOff });
+  socket.emit("setToggleDevice", { id, onOff });
 };
 
 // Función para cambiar el estado de un dispositivo (encender o apagar)
 const setDimmerDevice = (id, brightness) => {
-  socket.emit("dimmerDevice", { id, brightness });
+  socket.emit("setDimmerDevice", { id, brightness });
+};
+// Función para cambiar la temperatura de color de una bombilla
+const setTemperatureColor = (id, temperature) => {
+  socket.emit("setTemperature", { id, temperature });
 };
 
 // Función para manejar el encendido/apagado de una luz
 const toggleLight = (id) => {
-  socket.emit("lightToggle", id);
+  socket.emit("setLightToggle", id);
 };
 
 
-export { getDevicesState, toggleDevice, toggleLight, setDimmerDevice };
+export { getDevicesState, toggleDevice, toggleLight, setDimmerDevice, setTemperatureColor };

@@ -33,7 +33,7 @@ export default function Dashboard() {
       socket.off("devicesState");
     };
   }, []);
-
+console.log(devices.lights);
   return (
     <div className={classes.container}>
       <Grid columns="3" p="2">
@@ -71,11 +71,12 @@ export default function Dashboard() {
                   deviceID={device.id}
                   status={device.onOff}
                   deviceStatus={device.onOff}
+                  colorTemperature={device.colorTemperature}
+                  spectrum={device.spectrum}
                 />
               ))}
             </Grid>
-
-            <Dimmer idName={"Oficina"} deviceID={65537} />
+            <Grid columns="2" gap="2">
             {Object.values(devices.lights).map(
               (device) =>
                 device.dimable ? ( // Si es "dimable", renderiza el componente
@@ -88,6 +89,7 @@ export default function Dashboard() {
                   />
                 ) : null // Si no es "dimable", no renderiza nada
             )}
+            </Grid>
           </Flex>
         </Box>
 

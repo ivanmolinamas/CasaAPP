@@ -13,17 +13,22 @@
   -moz-osx-font-smoothing: grayscale;
 
   --primary_color: #60d1ab;
---bg_color: #1f1f1f;
---bg_nav_color: #1f1f1f;
---btn_color: #60d1ab;
---btn_hover_color: #6fe4bd;
---btn_nav_color: #1f1f1f00;
---btn_nav_hover_color: #797676;
---text_color: #f1f1f1;
---greenOnColor:#60d160;
+  --bg_color: #1f1f1f;
+  --bg_nav_color: #1f1f1f;
+  --btn_color: #60d1ab;
+  --btn_hover_color: #6fe4bd;
+  --hover_color_alt: #dce46f;
+  --hover_color_alt2: #c4cac0;
+  --btn_nav_color: #1f1f1f00;
+  --btn_nav_hover_color: #797676;
+  --text_color: #f1f1f1;
+  --greenOnColor: #60d160;
+  --colorTemperatureWarm: #f3ad15;
+  --colorTemperatureRegular: #e2e484;
+  --colorTemperatureCoold: #b1e3f1;
 }
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
