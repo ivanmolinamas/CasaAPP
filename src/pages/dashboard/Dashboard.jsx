@@ -70,6 +70,7 @@ export default function Dashboard() {
                   idName={device.name}
                   deviceID={device.id}
                   status={device.onOff}
+                  deviceStatus={device.onOff}
                 />
               ))}
             </Grid>
