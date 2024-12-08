@@ -20,13 +20,19 @@ export default function Dashboard() {
     connectSocket(); // Inicia la conexión de Socket.IO
     getDevicesState(setDevices); // Escucha los cambios en los dispositivos
 
+    // Escucha los cambios en los dispositivos
+    socket.on("devicesState", (data) => {
+      setDevices({
+        lights: data.lights,
+        plugs: data.plugs,
+      });
+    });
+
     return () => {
       // Limpiar el listener al desmontar
       socket.off("devicesState");
     };
   }, []);
-
-  console.log(devices);
 
   return (
     <div className={classes.container}>
@@ -58,19 +64,14 @@ export default function Dashboard() {
               <SwitchComp idName={"Mesa 1"} deviceID={65562}/>
                */}
 
-              {Object.values(devices.lights).map(
-                (device) => (
-                  console.log(device),
-                  (
-                    <SwitchComp
-                      key={device.id}
-                      idName={device.name}
-                      deviceID={device.id}
-                      status={device.onOff}
-                    />
-                  )
-                )
-              )}
+              {Object.values(devices.lights).map((device) => (
+                <SwitchComp
+                  key={device.id}
+                  idName={device.name}
+                  deviceID={device.id}
+                  status={device.onOff}
+                />
+              ))}
             </Grid>
 
             <Dimmer idName={"Oficina"} deviceID={65537} />

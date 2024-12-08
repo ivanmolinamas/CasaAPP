@@ -4,7 +4,7 @@ import { Box, Heading, Flex, Text } from "@radix-ui/themes";
 export default function TermoInfo({ idName }) {
   return (
     <div className={classes.container}>
-      <Box display="flex" alignItems="center" gap="3">
+      <Box display="flex" align-items="center" gap="3">
         <Flex direction="column" gap="0" p="1" justify="center" align="center">
           <Heading size="3">{idName}</Heading>
           <div className={classes.status}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import classes from "./Dimmer.module.css";
 import { Heading } from "@radix-ui/themes";
 import * as Slider from "@radix-ui/react-slider";

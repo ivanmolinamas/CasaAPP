@@ -4,6 +4,7 @@ import { socket } from "./socketService";
 // Función para obtener el estado de los dispositivos
 const getDevicesState = (setDevices) => {
   socket.on("devicesState", (data) => {
+    console.log(data);
     setDevices({
       lights: data.lights,
       plugs: data.plugs,
@@ -25,5 +26,6 @@ const dimmerDevice = (id, brightness) => {
 const toggleLight = (id) => {
   socket.emit("lightToggle", id);
 };
+
 
 export { getDevicesState, toggleDevice, toggleLight, dimmerDevice };

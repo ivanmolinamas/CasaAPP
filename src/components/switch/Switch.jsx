@@ -20,7 +20,7 @@ export default function SwitchComp({ idName, deviceID, status }) {
 
   return (
     <div className={classes.container}>
-      <Box display="flex" alignItems="center" gap="3">
+      <Box display="flex" align-items="center" gap="3">
         <form>
           <Flex
             direction="column"
