@@ -36,7 +36,14 @@ export default function Dashboard() {
 console.log(devices.lights);
   return (
     <div className={classes.container}>
-      <Grid columns="3" p="2">
+      <Grid columns={{
+        initial:"3",
+        xl:"3",
+      lg:"3",
+        md:"2",
+        sm: "1"
+      }} 
+      p="2">
         <Box p="2" size="3">
           <Flex direction="column" gap="2" size="3" justify="center">
             <Heading size="5">Escenas personales</Heading>
@@ -56,7 +63,11 @@ console.log(devices.lights);
             align="center"
           >
             <Heading size="5">Interruptores</Heading>
-            <Grid columns="2" gap="2">
+            <Grid columns={{
+              xl:"3",
+              lg:"2",
+              md:"2",
+            }} gap="4">
               {/**
                * <SwitchComp idName={"Oficina"}  deviceID={65537} />
               <SwitchComp idName={"Lampara Cris"} deviceID={65550} />
@@ -76,20 +87,7 @@ console.log(devices.lights);
                 />
               ))}
             </Grid>
-            <Grid columns="2" gap="2">
-            {Object.values(devices.lights).map(
-              (device) =>
-                device.dimable ? ( // Si es "dimable", renderiza el componente
-                  <Dimmer
-                    key={device.id} // Es importante añadir una "key" única al iterar en React
-                    idName={device.name}
-                    deviceID={device.id}
-                    dimmer={device.brightness}
-                    dimmerStatus={device.brightness}
-                  />
-                ) : null // Si no es "dimable", no renderiza nada
-            )}
-            </Grid>
+            
           </Flex>
         </Box>
 
@@ -103,9 +101,22 @@ console.log(devices.lights);
           >
             <Heading size="5">Temperatura</Heading>
             <Grid columns="2" gap="2">
+            {Object.values(devices.lights).map(
+              (device) =>
+                device.dimable ? ( // Si es "dimmable", renderiza el componente
+                  <Dimmer
+                    key={device.id} // Es importante añadir una "key" única al iterar en React
+                    idName={device.name}
+                    deviceID={device.id}
+                    dimmer={device.brightness}
+                    dimmerStatus={device.brightness}
+                  />
+                ) : null // Si no es "dimable", no renderiza nada
+            )}
+            </Grid>
               <TermoInfo idName={"Salón"} />
               <TermoInfo idName={"Exterior"} />
-            </Grid>
+
           </Flex>
         </Box>
       </Grid>
