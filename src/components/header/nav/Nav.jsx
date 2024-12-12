@@ -11,7 +11,7 @@ export default function Nav() {
 
     return (
         <div className={classes.buttonContainer}>
-            <NavButton texto={"Dashboard"} ruta="/"/>
+            <NavButton texto={"Dashboard"} ruta="/dashboard"/>
             <NavButton texto={"Automatizaciones"} ruta="automatizaciones"/>
             <NavButton texto={"Configuración"} ruta="config"/>
         </div>

@@ -2,6 +2,7 @@ import Header from "../header/Header";
 import Content from "../content/Content";
 import classes from "./Layout.module.css";
 import Dashboard from "../../pages/dashboard/dashboard";
+import Login from "../../pages/login/Login";
 import { Routes, Route } from "react-router-dom";
 import Auto from "../../pages/auto/Auto";
 import Config from "../../pages/config/Config";
@@ -15,7 +16,8 @@ export default function Layout() {
       <div className={classes.content}>
         <Content>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/automatizaciones" element={<Auto />} />
             <Route path="/config" element={<Config />} />
           </Routes>
