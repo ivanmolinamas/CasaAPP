@@ -34,10 +34,10 @@ useEffect(() => {
 
   // conectamos al backend para obtener la lista de dispositivos y añadirla al useState
   useEffect(() => {
+    console.log("Conectando al backend...");
     connectSocket(); // Inicia la conexión de Socket.IO
 
     // PEDIR DATOS A TRADFRI PORQUE SOLO LOS DA CUANDO HAY CAMBIOS! 
-
     getDevicesState(setDevices); // Escucha los cambios en los dispositivos
 
     // Escucha los cambios en los dispositivos

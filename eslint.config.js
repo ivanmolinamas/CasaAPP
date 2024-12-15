@@ -34,5 +34,10 @@ export default [
         { allowConstantExport: true },
       ],
     },
+    module,exports: {
+      rules: {
+        "react/prop-types": "off"
+      }
+    },
   },
 ]

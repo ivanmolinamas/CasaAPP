@@ -5,7 +5,7 @@ import { socket } from "./socketService";
 const getDevicesState = (setDevices) => {
   socket.on("devicesState", (data) => {
     //console.log(data);
-    console.log("Datos recibidos de backend")
+    console.log("Datos de bombillas y enchufes recibidos de backend")
     setDevices({
       lights: data.lights,
       plugs: data.plugs,

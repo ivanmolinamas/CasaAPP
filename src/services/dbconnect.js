@@ -23,19 +23,24 @@ export async function login(user, password) {
 
 // Función para verificar token
 export function verifyToken() {
+  return new Promise((resolve, reject) => {
     const token = localStorage.getItem('token');
+    console.log('Verificando token:', token);
     if (!token) {
       console.log('No token found');
-      return;
+      return reject(new Error('No token found'));
     }
-  
-    socket.emit('verify-token', token, (response) => {
+
+    socket.emit('verifyToken', { token }, (response) => {
+      console.log('Respuesta del servidor:', response);
       if (response.status === 'success') {
         console.log('Token verificado:', response.user);
-        // Aquí puedes redirigir a /dashboard o la página principal
+        resolve(response.user); // Devuelve el usuario si el token es válido
       } else {
         console.log('Token inválido:', response.message);
-        // Aquí puedes redirigir al usuario a la página de login
+        reject(new Error('Token inválido'));
       }
     });
+  });
   }
+

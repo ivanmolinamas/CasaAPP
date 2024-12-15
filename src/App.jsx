@@ -1,17 +1,44 @@
-import './App.css'
-import Layout from './components/layout/Layout'
-import { BrowserRouter } from 'react-router-dom'
+import "./App.css";
+import Layout from "./components/layout/Layout";
+import Login from "./pages/login/Login";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "@radix-ui/themes/styles.css";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
+import { AuthProvider } from "./hooks/AuthContext";
 
+import Dashboard from "./pages/dashboard/dashboard";
+import Config from "./pages/config/Config";
+import Auto from "./pages/auto/Auto";
 
 function App() {
-
+  //<Layout />
   return (
+    <AuthProvider>
+      <BrowserRouter>
+      <Routes>
+          {/* Ruta pública: Login */}
+          <Route path="/" element={<Login />} />
 
-    <BrowserRouter>
-      <Layout/>
-    </BrowserRouter>
-  )
+          {/* Rutas protegidas */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            {/* Estas rutas se renderizarán dentro del Layout */}
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="configuracion" element={<Config />} />
+            <Route path="automatizacion" element={<Auto />} />
+          </Route>
+          {/* Ruta por defecto (404) */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
