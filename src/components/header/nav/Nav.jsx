@@ -1,7 +1,9 @@
 import classes from "./Nav.module.css";
 import NavButton from "./navButton/NavButton";
 import { AuthContext } from "../../../hooks/AuthContext";
-//const authContext = useContext(AuthContext); // Accede al contexto aquí
+import { useContext } from "react";
+
+
 
 
 /**
@@ -10,9 +12,10 @@ import { AuthContext } from "../../../hooks/AuthContext";
  * @returns 
  */
 export default function Nav() {
+    const { logout, authToken } = useContext(AuthContext);
 
     const handleLogOut = () => {
-        //authContext.logout;
+        logout();
     };
     return (
 
@@ -20,7 +23,16 @@ export default function Nav() {
             <NavButton texto={"Dashboard"} ruta="/dashboard"/>
             <NavButton texto={"Automatizaciones"} ruta="automatizaciones"/>
             <NavButton texto={"Configuración"} ruta="config"/>
-            <button type="button" onClick={() => console.log("logout")} className={classes.logout}>Cerrar sesión</button>
+            {authToken && ( // Mostramos el botón de cerrar sesión solo si hay un authToken
+                
+                <button
+                    type="button"
+                    onClick={handleLogOut}
+                    className={classes.logout}
+                >
+                    Cerrar sesión
+                </button>
+            )}
         </div>
     );
 }

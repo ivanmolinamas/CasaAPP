@@ -10,8 +10,10 @@ export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("")
   const navigate = useNavigate();
   const authContext = useContext(AuthContext); // Accede al contexto aquí
+
 
   const [newUser, setNewUser] = useState({
     name: "",
@@ -48,8 +50,9 @@ export default function Login() {
       .then((data) => {
         console.log("usuario creado correctamente", data)
         console.log(data.user)
-        const newUser = data.user;
-        const result = "Usuario "+ newUser +" creado correctamente."
+        const newUserName = data.user;
+        setSuccessMessage(`Usuario "${newUserName}" creado correctamente.`);
+        setError(null); // Limpia el mensaje de error si existía
       })
       .catch((error) => {
         console.log("Error en el login: " + error);
@@ -78,10 +81,10 @@ export default function Login() {
       <Tabs.Root className={classes.Root} defaultValue="tab1">
         <Tabs.List className={classes.List} aria-label="gestiona tu cuenta">
           <Tabs.Trigger className={classes.Trigger} value="tab1">
-            Acceso
+            <span className={classes.tabColor}>Acceso</span>
           </Tabs.Trigger>
           <Tabs.Trigger className={classes.Trigger} value="tab2">
-            Crear cuenta
+            <span className={classes.tabColor}>Crear cuenta</span>
           </Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content className={classes.Content} value="tab1">
@@ -175,6 +178,7 @@ export default function Login() {
             }
             />
           {error && <p className={classes.error}>{error}</p>}
+          {successMessage && <p className={classes.success}>{successMessage}</p>}
           </fieldset>
           <div
             style={{

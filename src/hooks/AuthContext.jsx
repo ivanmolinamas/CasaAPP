@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect} from "react";
 import { verifyToken } from "../services/dbconnect";
-
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -10,6 +10,8 @@ export function AuthProvider({ children }) {
     const [rol, setRol] = useState(null); // Guarda el usuario autenticado
     const [loading, setLoading] = useState(true); // Para manejar el estado de carga
   
+    
+
     // Función para iniciar sesión
     const login = (token, user, rol) => {
      // guardamos los datos del usuario
@@ -27,10 +29,12 @@ export function AuthProvider({ children }) {
   
     // Función para cerrar sesión
     const logout = () => {
+      console.log("logout desde AuthContext");
       setAuthToken(null);
       setUser(null);
       setRol(null);
       localStorage.removeItem("token");
+      navigate("/login"); // Redirigimos a la pagina login
     };
   
     // Verificar el token al cargar el contexto
