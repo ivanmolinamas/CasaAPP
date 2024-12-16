@@ -4,7 +4,7 @@ import { AuthContext } from "../../hooks/AuthContext";
 import classes from "./Login.module.css";
 import { Tabs } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { login, verifyToken } from "../../services/dbconnect";
+import { login, verifyToken, crearUsuarioNuevo } from "../../services/dbconnect";
 
 export default function Login() {
   const [user, setUser] = useState("");
@@ -12,6 +12,13 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const authContext = useContext(AuthContext); // Accede al contexto aquí
+
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  })
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,9 +36,28 @@ export default function Login() {
       })
       .catch((error) => {
         console.log("Error en el login: " + error);
-        setError(error.message || "Error inesperado");
+        setError(error || "Error inesperado");
       });
   };
+
+  const handleCreateUser = async (e) => {
+    e.preventDefault();
+    console.log(newUser);
+
+    crearUsuarioNuevo(newUser.name ,newUser.email, newUser.password)
+      .then((data) => {
+        console.log("usuario creado correctamente", data)
+        console.log(data.user)
+        const newUser = data.user;
+        const result = "Usuario "+ newUser +" creado correctamente."
+      })
+      .catch((error) => {
+        console.log("Error en el login: " + error);
+        setError(error || "Error inesperado");
+      });
+  };
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -98,13 +124,24 @@ export default function Login() {
             </button>
           </div>
         </Tabs.Content>
+
+
+        {/** crear usuario */}
         <Tabs.Content className={classes.Content} value="tab2">
           <p className={classes.Text}>Crea una cuenta de usuario</p>
           <fieldset className={classes.Fieldset}>
             <label className={classes.Label} htmlFor="newUser">
               Nombre de usuario
             </label>
-            <input className={classes.Input} id="newUser" type="password" />
+            <input className={classes.Input} id="newUser" type="text"
+            onChange={(e) => 
+              setNewUser((prev) => ({
+              ...prev,
+              name: e.target.value, // Actualiza solo el campo "name"
+            }))
+          }
+            
+              />
           </fieldset>
           <fieldset className={classes.Fieldset}>
             <label className={classes.Label} htmlFor="newPassword">
@@ -114,13 +151,30 @@ export default function Login() {
               className={classes.Input}
               id="newPassword"
               type="password"
+              onChange={(e) =>
+                setNewUser((prev) => ({
+                  ...prev,
+                  password: e.target.value, // Actualiza solo el campo "password"
+                }))
+              }
             />
           </fieldset>
           <fieldset className={classes.Fieldset}>
             <label className={classes.Label} htmlFor="newMail">
               Email
             </label>
-            <input className={classes.Input} id="newMail" type="email" />
+            <input 
+            className={classes.Input} 
+            id="newMail" 
+            type="email" 
+            onChange={(e) =>
+              setNewUser((prev) => ({
+                ...prev,
+                email: e.target.value, // Actualiza solo el campo "email"
+              }))
+            }
+            />
+          {error && <p className={classes.error}>{error}</p>}
           </fieldset>
           <div
             style={{
@@ -129,7 +183,10 @@ export default function Login() {
               justifyContent: "flex-end",
             }}
           >
-            <button className={`${classes.Button} green`}>Crear cuenta</button>
+            <button 
+            className={`${classes.Button} green`}
+            onClick={handleCreateUser}
+            >Crear cuenta</button>
           </div>
         </Tabs.Content>
       </Tabs.Root>

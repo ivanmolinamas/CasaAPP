@@ -9,12 +9,28 @@ export async function login(user, password) {
       socket.emit("login", { user, password }, (response) => {
         if (response.status === "success") {
           console.log("Login exitoso:", response);
-          // Aquí puedes guardar el token en localStorage
+          // Aquí puedo guardar el token en localStorage
           localStorage.setItem("token", response.token);
           resolve(response);
 
         } else {
           console.error("Error en el login:", response.message);
+          reject(response.message);
+        }
+      });
+    });
+  }
+
+// función para el crear usuario
+export async function crearUsuarioNuevo(user, password, email) {
+    return new Promise((resolve, reject) => {
+      // Emitimos el evento 'login' con los datos del usuario
+      socket.emit("register", { user, email ,password }, (response) => {
+        if (response.status === "success") {
+          console.log("Usuario creado:", response);
+          resolve(response);
+        } else {
+          console.error("Error al crear el usuario:", response.message);
           reject(response.message);
         }
       });
