@@ -141,3 +141,20 @@
 .tabColor{
 	color: rgb(54, 54, 54);
 }
+.logo{
+	height: 25rem;
+}
+.centralContainer{
+	display: flex;
+	
+}
+.title{
+	color: var(--greenOnColor);
+	font-size: 3rem;
+	justify-self: center;
+}
+.logoContainer{
+	background-color:rgba(128, 128, 128, 0.774);
+	border-radius: 10px;
+	margin-right: 1rem;
+}
