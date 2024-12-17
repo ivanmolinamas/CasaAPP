@@ -78,6 +78,12 @@ export default function Login() {
 
   return (
     <div className={classes.container}>
+      <div className={classes.centralContainer}>
+        <div className={classes.logoContainer}>
+        <img src="./img/logo.png" alt="logo" className={classes.logo} />
+          <h1 className={classes.title}>CasaApp</h1>
+        </div>
+      
       <Tabs.Root className={classes.Root} defaultValue="tab1">
         <Tabs.List className={classes.List} aria-label="gestiona tu cuenta">
           <Tabs.Trigger className={classes.Trigger} value="tab1">
@@ -194,6 +200,7 @@ export default function Login() {
           </div>
         </Tabs.Content>
       </Tabs.Root>
+      </div>
     </div>
   );
 }

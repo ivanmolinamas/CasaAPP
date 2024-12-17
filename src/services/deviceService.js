@@ -5,7 +5,7 @@ import { socket } from "./socketService";
 const getDevicesState = (setDevices) => {
   socket.on("devicesState", (data) => {
     //console.log(data);
-    console.log("Datos de bombillas y enchufes recibidos de backend")
+    console.log("Datos de bombillas y enchufes recibidos de backend");
     setDevices({
       lights: data.lights,
       plugs: data.plugs,
@@ -13,26 +13,95 @@ const getDevicesState = (setDevices) => {
   });
 };
 const getDevicesStateNow = () => {
-socket.emit("getDevicesState");
+  socket.emit("getDevicesState");
 };
 // Función para cambiar el estado de un dispositivo (encender o apagar)
 const toggleDevice = (id, onOff) => {
+  console.log("cambiar estado device ID:", id);
   socket.emit("setToggleDevice", { id, onOff });
 };
 
 // Función para cambiar el estado de un dispositivo (encender o apagar)
-const setDimmerDevice = (id, brightness) => {
+const setDimmerDevice2 = (id, brightness) => {
   socket.emit("setDimmerDevice", { id, brightness });
 };
 // Función para cambiar la temperatura de color de una bombilla
-const setTemperatureColor = (id, temperature) => {
+const setTemperatureColor2 = (id, temperature) => {
   socket.emit("setTemperature", { id, temperature });
 };
 
 // Función para manejar el encendido/apagado de una luz
 const toggleLight = (id) => {
+  console.log("cambiar estado bombilla ID:", id);
   socket.emit("setLightToggle", id);
 };
 
 
-export { getDevicesState, toggleDevice, toggleLight, setDimmerDevice, setTemperatureColor, getDevicesStateNow  };
+
+
+////////////////////
+// Funciones con callback
+const toggleLight2 = (id) => {
+  console.log("cambiar estado bombilla ID:", id);
+  if (!id) {
+    console.log("ID no válido");
+    return;
+  }
+  socket.emit("setLightToggle2", { id }, (response) => {
+    if (response.status === "success") {
+      console.log("Luz cambiada correctamente");
+      console.log(response);
+    } else {
+      console.log("Error al cambiar la luz:", response.message);
+    }
+  });
+};
+
+// Dimmear
+const setDimmerDevice = (id, brightness) => {
+  console.log("cambiar estado bombilla ID:", id);
+  if (!id) {
+    console.log("ID no válido");
+    return;
+  }
+
+  socket.emit("setDimmerDevice", { id,brightness }, (response) => {
+    if (response.status === "success") {
+      console.log("Luz cambiada correctamente");
+      console.log(response.message);
+    } else {
+      console.log("Error al cambiar la luz:", response.message);
+    }
+  });
+};
+ 
+// Cambiar color temperatura bombilla
+const setTemperatureColor = (id, temperature) => {
+  console.log("cambiar estado bombilla ID:", id);
+  if (!id) {
+    console.log("ID no válido");
+    return;
+  }
+  socket.emit("setTemperature", { id,temperature }, (response) => {
+    if (response.status === "success") {
+      console.log("Luz cambiada de color correctamente");
+      console.log(response.message);
+    } else {
+      console.log("Error al cambiar color de luz:", response.message);
+    }
+  });
+};
+
+
+
+
+
+export {
+  getDevicesState,
+  toggleDevice,
+  toggleLight,
+  setDimmerDevice,
+  setTemperatureColor,
+  getDevicesStateNow,
+  toggleLight2,
+};
