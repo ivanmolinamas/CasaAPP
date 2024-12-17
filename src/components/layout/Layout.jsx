@@ -5,7 +5,6 @@ import Dashboard from "../../pages/dashboard/dashboard";
 import Login from "../../pages/login/Login";
 import { Routes, Route, Outlet } from "react-router-dom";
 import Auto from "../../pages/auto/Auto";
-import Config from "../../pages/config/Config";
 import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 
 export default function Layout() {

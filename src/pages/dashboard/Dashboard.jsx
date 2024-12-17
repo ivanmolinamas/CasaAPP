@@ -6,7 +6,10 @@ import classes from "./Dashboard.module.css";
 import { Heading, Grid, Box, Flex } from "@radix-ui/themes";
 import { useEffect, useState } from "react";
 import { socket, connectSocket } from "../../services/socketService";
-import { getDevicesState, getDevicesStateNow } from "../../services/deviceService";
+import {
+  getDevicesState,
+  getDevicesStateNow,
+} from "../../services/deviceService";
 import { verifyToken } from "../../services/dbconnect";
 //importamos socket io
 //const socket = io("http://localhost:4000");
@@ -15,29 +18,25 @@ export default function Dashboard() {
   // estado de los dispositivos importados desde el backend
   const [devices, setDevices] = useState({ lights: [], plugs: [] });
 
-  
-// Comprobamos token
-useEffect(() => {
-  getDevicesStateNow(); //Pedimos los datos al backend de los dispositivos
-  const token = localStorage.getItem('token');
-  if (!token) {
-    // Si no hay token, redirige al login
-    window.location.href = '/';
-  } else {
-    // Verifica el token con el servidor
-    verifyToken();
-  }
-}, []);
-
-
-
+  // Comprobamos token
+  useEffect(() => {
+    getDevicesStateNow(); //Pedimos los datos al backend de los dispositivos
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // Si no hay token, redirige al login
+      window.location.href = "/";
+    } else {
+      // Verifica el token con el servidor
+      verifyToken();
+    }
+  }, []);
 
   // conectamos al backend para obtener la lista de dispositivos y añadirla al useState
   useEffect(() => {
     console.log("Conectando al backend...");
     connectSocket(); // Inicia la conexión de Socket.IO
 
-    // PEDIR DATOS A TRADFRI PORQUE SOLO LOS DA CUANDO HAY CAMBIOS! 
+    // PEDIR DATOS A TRADFRI PORQUE SOLO LOS DA CUANDO HAY CAMBIOS!
     getDevicesState(setDevices); // Escucha los cambios en los dispositivos
 
     // Escucha los cambios en los dispositivos
@@ -53,27 +52,19 @@ useEffect(() => {
       socket.off("devicesState");
     };
   }, []);
-console.log(devices.lights);
+  console.log(devices.lights);
   return (
     <div className={classes.container}>
-      <Grid columns={{
-        initial:"3",
-        xl:"3",
-      lg:"3",
-        md:"2",
-        sm: "1"
-      }} 
-      p="2">
-        <Box p="2" size="3">
-          <Flex direction="column" gap="2" size="3" justify="center">
-            <Heading size="5">Escenas personales</Heading>
-            <ButtonRa texto={"Escena 1"} />
-            <ButtonRa texto={"Escena 2"} />
-            <ButtonRa texto={"Escena 3"} />
-            <ButtonRa texto={"Escena 4"} />
-          </Flex>
-        </Box>
-
+      <Grid
+        columns={{
+          initial: "3",
+          xl: "3",
+          lg: "3",
+          md: "2",
+          sm: "1",
+        }}
+        p="2"
+      >
         <Box p="2" size="3">
           <Flex
             direction="column"
@@ -83,11 +74,14 @@ console.log(devices.lights);
             align="center"
           >
             <Heading size="5">Interruptores</Heading>
-            <Grid columns={{
-              xl:"3",
-              lg:"2",
-              md:"2",
-            }} gap="4">
+            <Grid
+              columns={{
+                xl: "3",
+                lg: "2",
+                md: "2",
+              }}
+              gap="4"
+            >
               {/**
                * <SwitchComp idName={"Oficina"}  deviceID={65537} />
               <SwitchComp idName={"Lampara Cris"} deviceID={65550} />
@@ -107,11 +101,10 @@ console.log(devices.lights);
                 />
               ))}
             </Grid>
-            
           </Flex>
         </Box>
 
-        <Box size="3">
+        <Box p="2" size="3">
           <Flex
             direction="column"
             gap="2"
@@ -121,22 +114,31 @@ console.log(devices.lights);
           >
             <Heading size="5">Temperatura</Heading>
             <Grid columns="2" gap="2">
-            {Object.values(devices.lights).map(
-              (device) =>
-                device.dimable ? ( // Si es "dimmable", renderiza el componente
-                  <Dimmer
-                    key={device.id} // Es importante añadir una "key" única al iterar en React
-                    idName={device.name}
-                    deviceID={device.id}
-                    dimmer={device.brightness}
-                    dimmerStatus={device.brightness}
-                  />
-                ) : null // Si no es "dimable", no renderiza nada
-            )}
+              {Object.values(devices.lights).map(
+                (device) =>
+                  device.dimable ? ( // Si es "dimmable", renderiza el componente
+                    <Dimmer
+                      key={device.id} // Es importante añadir una "key" única al iterar en React
+                      idName={device.name}
+                      deviceID={device.id}
+                      dimmer={device.brightness}
+                      dimmerStatus={device.brightness}
+                    />
+                  ) : null // Si no es "dimable", no renderiza nada
+              )}
             </Grid>
-              <TermoInfo idName={"Salón"} />
-              <TermoInfo idName={"Exterior"} />
+            <TermoInfo idName={"Salón"} />
+            <TermoInfo idName={"Exterior"} />
+          </Flex>
+        </Box>
 
+        <Box size="3">
+          <Flex direction="column" gap="2" size="3" justify="center">
+            <Heading size="5">Escenas personales</Heading>
+            <ButtonRa texto={"Escena 1"} />
+            <ButtonRa texto={"Escena 2"} />
+            <ButtonRa texto={"Escena 3"} />
+            <ButtonRa texto={"Escena 4"} />
           </Flex>
         </Box>
       </Grid>
