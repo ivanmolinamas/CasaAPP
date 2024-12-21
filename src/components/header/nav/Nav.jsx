@@ -2,7 +2,7 @@ import classes from "./Nav.module.css";
 import NavButton from "./navButton/NavButton";
 import { AuthContext } from "../../../hooks/AuthContext";
 import { useContext } from "react";
-
+import ButtonRa from "../../button/ButtonRa";
 
 
 
@@ -21,17 +21,17 @@ export default function Nav() {
 
         <div className={classes.buttonContainer}>
             <NavButton texto={"Dashboard"} ruta="/dashboard"/>
-            <NavButton texto={"Automatizaciones"} ruta="automatizaciones"/>
-            <NavButton texto={"Configuración"} ruta="config"/>
+            <NavButton texto={"Automatizaciones"} ruta="automatizacion"/>
+            <NavButton texto={"Configuración"} ruta="configuracion"/>
             {authToken && ( // Mostramos el botón de cerrar sesión solo si hay un authToken
                 
-                <button
+                <ButtonRa
                     type="button"
                     onClick={handleLogOut}
                     className={classes.logout}
                 >
                     Cerrar sesión
-                </button>
+                </ButtonRa>
             )}
         </div>
     );
