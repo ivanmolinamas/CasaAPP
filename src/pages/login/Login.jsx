@@ -46,7 +46,7 @@ export default function Login() {
     e.preventDefault();
     console.log(newUser);
 
-    crearUsuarioNuevo(newUser.name ,newUser.email, newUser.password)
+    crearUsuarioNuevo(newUser.name ,newUser.password,newUser.email )
       .then((data) => {
         console.log("usuario creado correctamente", data)
         console.log(data.user)
