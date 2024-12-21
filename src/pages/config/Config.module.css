@@ -25,6 +25,7 @@
 .table th {
   background-color: #487960;
   font-weight: bold;
+  text-align: center;
 }
 
 .table tr:nth-child(even) {
@@ -33,4 +34,12 @@
 
 .table tr:hover {
   background-color: #71beab;
+}
+
+.flexGap{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }

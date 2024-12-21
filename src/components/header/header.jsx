@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <header className={classes.header}>
       <div className={classes.logoMark}>
-        <img src="/img/logo.png" alt="Logo" className={classes.logo} />
+        <img src="/img/logov1.png" alt="Logo" className={classes.logo} />
         <Heading color="accent" >Casa APP</Heading>
       </div>
       <Nav />

@@ -52,6 +52,7 @@ export default function Dashboard() {
       socket.off("devicesState");
     };
   }, []);
+  
   console.log(devices.lights);
   return (
     <div className={classes.container}>
@@ -135,10 +136,10 @@ export default function Dashboard() {
         <Box size="3">
           <Flex direction="column" gap="2" size="3" justify="center">
             <Heading size="5">Escenas personales</Heading>
-            <ButtonRa texto={"Escena 1"} />
-            <ButtonRa texto={"Escena 2"} />
-            <ButtonRa texto={"Escena 3"} />
-            <ButtonRa texto={"Escena 4"} />
+            <ButtonRa>Escena 1 </ButtonRa>
+            <ButtonRa>Escena 2 </ButtonRa>
+            <ButtonRa>Escena 3 </ButtonRa>
+            <ButtonRa>Escena 4 </ButtonRa>
           </Flex>
         </Box>
       </Grid>

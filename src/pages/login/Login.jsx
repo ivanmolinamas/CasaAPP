@@ -80,7 +80,7 @@ export default function Login() {
     <div className={classes.container}>
       <div className={classes.centralContainer}>
         <div className={classes.logoContainer}>
-        <img src="./img/logo.png" alt="logo" className={classes.logo} />
+        <img src="./img/logov1.png" alt="logo" className={classes.logo} />
           <h1 className={classes.title}>CasaApp</h1>
         </div>
       

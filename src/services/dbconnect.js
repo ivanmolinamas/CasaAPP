@@ -75,3 +75,20 @@ export function verifyToken() {
       });
     });
   }
+
+
+  export async function removeUser(userID) {
+    return new Promise((resolve, reject) => {
+      // Emitimos el evento 'obtenerUsuarios'
+      socket.emit("removeUser", {userID}, (response) => {
+        if (response.status === "success") {
+          console.log("Usuario eliminado:", response.message);
+          resolve(response.usuarios); // Devuelve la lista de usuarios
+        } else {
+          console.error("Error al obtener la lista de usuarios:", response.message);
+          reject(new Error(response.message));
+        }
+      });
+    });
+  }
+

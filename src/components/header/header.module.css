@@ -8,6 +8,7 @@
 .logo{
     height: 5rem;
     width: 5rem;
+    padding: 0.5rem;
 }
 .logoMark{
     display: flex;

@@ -142,7 +142,8 @@
 	color: rgb(54, 54, 54);
 }
 .logo{
-	height: 25rem;
+	/*height: 25rem;*/
+	width: 15rem;
 }
 .centralContainer{
 	display: flex;
@@ -154,7 +155,14 @@
 	justify-self: center;
 }
 .logoContainer{
-	background-color:rgba(128, 128, 128, 0.774);
+	background-color:#dfe4e3d8;
 	border-radius: 10px;
 	margin-right: 1rem;
+	box-shadow: 0 2px 10px var(--black-a4);
+	height: 25rem;
+	width: 18rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
