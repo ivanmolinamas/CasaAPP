@@ -11,6 +11,7 @@ export async function login(user, password) {
           console.log("Login exitoso:", response);
           // Aquí puedo guardar el token en localStorage
           localStorage.setItem("token", response.token);
+          localStorage.setItem("role", response.role);   // Guardamos el rol del usuario
           resolve(response);
 
         } else {
@@ -50,8 +51,8 @@ export function verifyToken() {
     socket.emit('verifyToken', { token }, (response) => {
       console.log('Respuesta del servidor:', response);
       if (response.status === 'success') {
-        console.log('Token verificado:', response.user);
-        resolve(response.user); // Devuelve el usuario si el token es válido
+        console.log('Token verificado:', response.token);
+        resolve(response.token); // Devuelve el usuario si el token es válido
       } else {
         console.log('Token inválido:', response.message);
         reject(new Error('Token inválido'));
@@ -60,3 +61,17 @@ export function verifyToken() {
   });
   }
 
+  export async function getUsers() {
+    return new Promise((resolve, reject) => {
+      // Emitimos el evento 'obtenerUsuarios'
+      socket.emit("getUsers", (response) => {
+        if (response.status === "success") {
+          console.log("Lista de usuarios obtenida:", response.usuarios);
+          resolve(response.usuarios); // Devuelve la lista de usuarios
+        } else {
+          console.error("Error al obtener la lista de usuarios:", response.message);
+          reject(new Error(response.message));
+        }
+      });
+    });
+  }
