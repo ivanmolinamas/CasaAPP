@@ -10,7 +10,7 @@ export default function Dimmer({ idName, deviceID, dimmer,dimmerStatus }) {
 
 // useEffect para sincronizar el estado cuando el estado del dispositivo cambie desde el backend
 useEffect(() => {
-    setValue(dimmer); // Sincroniza el estado con el prop `deviceStatus`
+    setValue(Math.round(dimmer)); // Sincroniza el estado con el prop `deviceStatus`
 }, [dimmer]); // El efecto se ejecutará cuando `deviceStatus` cambie
 
 function changeValue(newValue) {
