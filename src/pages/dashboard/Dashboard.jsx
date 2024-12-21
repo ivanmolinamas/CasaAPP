@@ -113,7 +113,7 @@ export default function Dashboard() {
             align="center"
           >
             <Heading size="5">Temperatura</Heading>
-            <Grid columns="2" gap="2">
+            <Grid columns="2" gap="2" justify="center" as="div">
               {Object.values(devices.lights).map(
                 (device) =>
                   device.dimable ? ( // Si es "dimmable", renderiza el componente
@@ -126,9 +126,9 @@ export default function Dashboard() {
                     />
                   ) : null // Si no es "dimable", no renderiza nada
               )}
+              <TermoInfo idName={"Salón"} />
+              <TermoInfo idName={"Exterior"} />
             </Grid>
-            <TermoInfo idName={"Salón"} />
-            <TermoInfo idName={"Exterior"} />
           </Flex>
         </Box>
 
