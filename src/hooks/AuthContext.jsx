@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
     const [user, setUser] = useState(null); // Guarda el usuario autenticado
     const [rol, setRol] = useState(null); // Guarda el usuario autenticado
     const [loading, setLoading] = useState(true); // Para manejar el estado de carga
-  
+
     
 
     // Función para iniciar sesión
@@ -18,13 +18,8 @@ export function AuthProvider({ children }) {
       setAuthToken(token);
       setUser(user);
       setRol(rol);
-      /*setAuthToken({
-        user: user,
-        rol: rol,
-        token: token,
-      });*/
-      console.log("valores de token:",authToken, "user:",user,"rol:" , rol);
       localStorage.setItem("token", token);
+      console.log("Login exitoso:", { token, user, rol });
     };
   
     // Función para cerrar sesión
@@ -43,8 +38,9 @@ export function AuthProvider({ children }) {
         try {
           setLoading(true); // Comienza la carga
           const userData = await verifyToken(); // Verifica el token
-          setUser(userData); // Guarda los datos del usuario si el token es válido
-          console.log("Usuario autenticado:", userData);
+          setUser(userData.username); // Guarda los datos del usuario si el token es válido
+          setRol(userData.rol); // Guarda los datos del usuario si el token es válido
+          console.log("userData:", userData);
         } catch (error) {
           console.error(error.message);
           logout(); // Cierra sesión si el token es inválido

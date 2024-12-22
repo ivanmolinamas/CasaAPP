@@ -9,6 +9,8 @@ import { AuthProvider } from "./hooks/AuthContext";
 import Dashboard from "./pages/dashboard/dashboard";
 import Config from "./pages/config/Config";
 import Auto from "./pages/auto/Auto";
+import Admin from "./pages/admin/Admin";
+
 
 function App() {
   //<Layout />
@@ -32,6 +34,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="configuracion" element={<Config />} />
             <Route path="automatizacion" element={<Auto />} />
+            <Route path="admin" element={<Admin />} />
           </Route>
           {/* Ruta por defecto (404) */}
           <Route path="*" element={<Navigate to="/" />} />

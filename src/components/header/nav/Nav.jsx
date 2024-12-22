@@ -12,7 +12,8 @@ import ButtonRa from "../../button/ButtonRa";
  * @returns 
  */
 export default function Nav() {
-    const { logout, authToken } = useContext(AuthContext);
+    const { logout, authToken, user, rol } = useContext(AuthContext);
+
 
     const handleLogOut = () => {
         logout();
@@ -23,15 +24,25 @@ export default function Nav() {
             <NavButton texto={"Dashboard"} ruta="/dashboard"/>
             <NavButton texto={"Automatizaciones"} ruta="automatizacion"/>
             <NavButton texto={"Configuración"} ruta="configuracion"/>
+        
+            {rol === "admin" && ( // Mostramos solo si el usuario tiene rol de admin
+                <NavButton texto={"Administración"} ruta="admin" />
+            )}
+
+
             {authToken && ( // Mostramos el botón de cerrar sesión solo si hay un authToken
-                
+            
+                <div>
+                <p className={classes.capitalize}>Hola { user }.</p>
                 <ButtonRa
                     type="button"
                     onClick={handleLogOut}
                     className={classes.logout}
+                    size="2"
                 >
                     Cerrar sesión
                 </ButtonRa>
+                </div>
             )}
         </div>
     );
