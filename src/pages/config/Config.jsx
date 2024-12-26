@@ -29,18 +29,19 @@ export default function Config() {
 
   const handleUpdateDevice = async (deviceId, customName, widgetType) => {
     try {
-      const message = await updatePersonalDevice(deviceId, customName, widgetType);
+      const message = await updatePersonalDevice( id, deviceId, customName, widgetType);
       alert(message);
       // Actualiza la lista de dispositivos localmente después del éxito
       setDevices((prevDevices) =>
         prevDevices.map((device) =>
           device.ID_device === deviceId
-            ? { ...device, custom_name: customName, widget_type: widgetType }
+            ? { ...device ,custom_name: customName, widget_type: widgetType }
             : device
         )
       );
     } catch (err) {
-      alert("Error al actualizar el dispositivo: " + err.message);
+      console.log("Error al actualizar el dispositivo: ", err);
+      alert("Error al actualizar el dispositivo: " + err);
     }
   };
 

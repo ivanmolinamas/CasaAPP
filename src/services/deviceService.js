@@ -2,7 +2,11 @@
 import { socket } from "./socketService";
 
 // Función para obtener el estado de los dispositivos
-const getDevicesState = (setDevices) => {
+const getDevicesState = (setDevices , id) => {
+  // enviamos al backend el id del usuario
+  console.log("id del usuario:",id);
+  socket.emit("setIdUser", { id: id });
+ 
   socket.on("devicesState", (data) => {
     //console.log(data);
     console.log("Datos de bombillas y enchufes recibidos de backend");
@@ -12,8 +16,8 @@ const getDevicesState = (setDevices) => {
     });
   });
 };
-const getDevicesStateNow = () => {
-  socket.emit("getDevicesState");
+const getDevicesStateNow = (id) => {
+  socket.emit("getDevicesState", {id: id});
 };
 // Función para cambiar el estado de un dispositivo (encender o apagar)
 const toggleDevice = (id, onOff) => {

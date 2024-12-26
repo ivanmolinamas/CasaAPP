@@ -4,7 +4,7 @@ import { socket } from "./socketService";
 export async function getPersonalDevices(ID) {
   return new Promise((resolve, reject) => {
     // Emitimos el evento para obtener los dispositivos
-    socket.emit("getPersonalDevices", {id: ID}, (response) => {
+    socket.emit("getPersonalDevices", { id: ID }, (response) => {
       console.log("id:  ", ID);
       if (response.status === "success") {
         console.log("Dispositivos personales obtenidos:", response.devices);
@@ -18,15 +18,24 @@ export async function getPersonalDevices(ID) {
 }
 
 // Actualizar dispositivo personal
-export async function updatePersonalDevice(deviceId, customName, widgetType) {
+export async function updatePersonalDevice(
+  userID,
+  deviceId,
+  customName,
+  widgetType
+) {
   return new Promise((resolve, reject) => {
+    console.log("Actualizando dispositivo personal...");
     // Emitimos el evento para actualizar un dispositivo personal
     socket.emit(
       "setNamePersonalDevice",
-      { body: { deviceId, customName, widgetType } },
+      { id: userID, body: { deviceId, customName, widgetType } },
       (response) => {
         if (response.status === "success") {
-          console.log("Dispositivo actualizado correctamente:", response.message);
+          console.log(
+            "Dispositivo actualizado correctamente:",
+            response.message
+          );
           resolve(response.message); // Devuelve el mensaje de éxito
         } else {
           console.error("Error al actualizar el dispositivo:", response.error);

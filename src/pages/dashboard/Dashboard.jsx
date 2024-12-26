@@ -11,16 +11,19 @@ import {
   getDevicesStateNow,
 } from "../../services/deviceService";
 import { verifyToken } from "../../services/dbconnect";
+import { AuthContext } from "../../hooks/AuthContext";
+import { useContext } from "react";
 //importamos socket io
 //const socket = io("http://localhost:4000");
 
 export default function Dashboard() {
   // estado de los dispositivos importados desde el backend
   const [devices, setDevices] = useState({ lights: [], plugs: [] });
+  const { id } = useContext(AuthContext);
 
   // Comprobamos token
   useEffect(() => {
-    getDevicesStateNow(); //Pedimos los datos al backend de los dispositivos
+    getDevicesStateNow(id); //Pedimos los datos al backend de los dispositivos
     const token = localStorage.getItem("token");
     if (!token) {
       // Si no hay token, redirige al login
@@ -37,7 +40,7 @@ export default function Dashboard() {
     connectSocket(); // Inicia la conexión de Socket.IO
 
     // PEDIR DATOS A TRADFRI PORQUE SOLO LOS DA CUANDO HAY CAMBIOS!
-    getDevicesState(setDevices); // Escucha los cambios en los dispositivos
+    getDevicesState(setDevices, id); // Escucha los cambios en los dispositivos
 
     // Escucha los cambios en los dispositivos
     socket.on("devicesState", (data) => {
