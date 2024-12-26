@@ -47,6 +47,7 @@ export function AuthProvider({ children }) {
         } catch (error) {
           console.error(error.message);
           logout(); // Cierra sesión si el token es inválido
+          navigate("/login"); // Redirigimos a la pagina login
         } finally {
           setLoading(false); // Finaliza la carga
         }
