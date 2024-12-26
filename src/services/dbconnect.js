@@ -95,3 +95,19 @@ export async function removeUser(userID) {
     });
   });
 }
+
+// Función para cambiar el rol de un usuario
+export async function toggleUserRole(userID) {
+  return new Promise((resolve, reject) => {
+    // Emitimos el evento 'toggleUserRole' con el ID del usuario
+    socket.emit("toggleUserRole", { userID }, (response) => {
+      if (response.status === "success") {
+        console.log("Rol del usuario actualizado exitosamente:", response.message);
+        resolve(response.message); // Resolvemos con el mensaje de éxito
+      } else {
+        console.error("Error al cambiar el rol del usuario:", response.message);
+        reject(new Error(response.message)); // Rechazamos con el mensaje de error
+      }
+    });
+  });
+}

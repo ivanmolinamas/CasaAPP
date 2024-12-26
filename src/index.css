@@ -26,10 +26,16 @@
   --colorTemperatureWarm: #f3ad15;
   --colorTemperatureRegular: #e2e484;
   --colorTemperatureCoold: #b1e3f1;
+  --background_color_widget:#5e64668a;
+  --background_color_input: #f0f0f0ee;
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+h1{
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }

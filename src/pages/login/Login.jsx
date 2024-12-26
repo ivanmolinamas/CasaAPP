@@ -32,7 +32,8 @@ export default function Login() {
         const token = data.token; // Vamos a guardar el token que llega del backend
         const user = data.user; //guardamos el nombre de usuario
         const rol = data.rol; // Guardamos el rol que tiene el usuario para gestionar sus permisos
-        authContext.login(token, user, rol ); // LLamamos a la funcion que guardara estos datos 
+        const id = data.id; // Guardamos el rol que tiene el usuario para gestionar sus permisos
+        authContext.login(token, user, rol,id ); // LLamamos a la funcion que guardara estos datos 
         console.log("Token guardado en el contexto:", token);
         navigate("/dashboard"); //te lleva a dashboard
       })

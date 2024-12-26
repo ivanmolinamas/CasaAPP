@@ -1,51 +1,115 @@
-import { getUsers, removeUser } from "../../services/dbconnect";
 import classes from "./Config.module.css";
-import { useState, useEffect } from "react";
-import ButtonRa from "../../components/button/ButtonRa";
+import React, { useEffect, useState } from "react";
+import { getPersonalDevices, updatePersonalDevice } from "../../services/adminDevices";
+import { AuthContext } from "../../hooks/AuthContext";
+import { useContext } from "react";
 
 export default function Config() {
-  const [usuarios, setUsuarios] = useState([]); // Estado para almacenar los usuarios
+  const [devices, setDevices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { id } = useContext(AuthContext);
 
-  async function mostrarUsuarios() {
-    try {
-      const usuarios = await getUsers();
-      //console.log("Usuarios:", usuarios);
-      // Aquí podrías renderizar la lista en tu interfaz, por ejemplo:
-      usuarios.forEach((usuario) => {
-        /*console.log(
-          `ID: ${usuario.id}, User: ${usuario.user}, Email: ${usuario.email}, Rol: ${usuario.rol}`
-        );*/
-      });
-      if (usuarios.length > 0) {
-        setUsuarios(usuarios); // Actualizamos el estado con los usuarios
-      } else {
-        console.error("Error al obtener usuarios:", response.message);
+
+  useEffect(() => {
+    // Obtener dispositivos al cargar el componente
+    async function fetchDevices() {
+      console.log("id: ", id);
+      try {
+        const devicesList = await getPersonalDevices(id);
+        setDevices(devicesList);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error al obtener usuarios:", error.message);
     }
-  }
+    fetchDevices();
+  }, []);
 
-  async function borrarUsuario(usuarioID) {
+  const handleUpdateDevice = async (deviceId, customName, widgetType) => {
     try {
-      // Lógica para eliminar un usuario
-      removeUser(usuarioID);
-      mostrarUsuarios(); // Actualizamos la lista de usuarios después de borrar
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error.message)
-  }
-}
+      const message = await updatePersonalDevice(deviceId, customName, widgetType);
+      alert(message);
+      // Actualiza la lista de dispositivos localmente después del éxito
+      setDevices((prevDevices) =>
+        prevDevices.map((device) =>
+          device.ID_device === deviceId
+            ? { ...device, custom_name: customName, widget_type: widgetType }
+            : device
+        )
+      );
+    } catch (err) {
+      alert("Error al actualizar el dispositivo: " + err.message);
+    }
+  };
 
- // useEffect para cargar los usuarios al montar el componente
- useEffect(() => {
-  mostrarUsuarios();
-}, []); // El array vacío asegura que se ejecute solo al cargar la página
+  if (loading) return <p>Cargando dispositivos...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className={classes.container}>
-      <h1>Configuración</h1>
-     
-     
+    <div>
+      <h1>Gestión de dispositivos</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Dispositivo</th>
+            <th>Nombre Personalizado</th>
+            <th>Tipo de Widget</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {devices.map((device) => (
+            <tr key={device.ID_device}>
+              <td>{device.name_device}</td>
+              <td>
+                <input
+                  type="text"
+                  defaultValue={device.custom_name || ""}
+                  onBlur={(e) =>
+                    handleUpdateDevice(
+                      device.ID_device,
+                      e.target.value,
+                      device.widget_type || ""
+                    )
+                  }
+                />
+              </td>
+              <td>
+                <select
+                  defaultValue={device.widget_type || ""}
+                  onChange={(e) =>
+                    handleUpdateDevice(
+                      device.ID_device,
+                      device.custom_name || "",
+                      e.target.value
+                    )
+                  }
+                >
+                  <option value="">Seleccionar</option>
+                  <option value="slider">Slider</option>
+                  <option value="switch">Switch</option>
+                  <option value="button">Button</option>
+                </select>
+              </td>
+              <td>
+                <button
+                  onClick={() =>
+                    handleUpdateDevice(
+                      device.ID_device,
+                      device.custom_name || "",
+                      device.widget_type || ""
+                    )
+                  }
+                >
+                  Guardar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

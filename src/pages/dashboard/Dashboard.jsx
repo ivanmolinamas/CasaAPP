@@ -52,7 +52,7 @@ export default function Dashboard() {
       socket.off("devicesState");
     };
   }, []);
-  
+
   console.log(devices.lights);
   return (
     <div className={classes.container}>
@@ -127,8 +127,6 @@ export default function Dashboard() {
                     />
                   ) : null // Si no es "dimable", no renderiza nada
               )}
-              <TermoInfo idName={"Salón"} />
-              <TermoInfo idName={"Exterior"} />
             </Grid>
           </Flex>
         </Box>
@@ -140,6 +138,8 @@ export default function Dashboard() {
             <ButtonRa>Escena 2 </ButtonRa>
             <ButtonRa>Escena 3 </ButtonRa>
             <ButtonRa>Escena 4 </ButtonRa>
+            <TermoInfo idName={"Salón"} />
+            <TermoInfo idName={"Exterior"} />
           </Flex>
         </Box>
       </Grid>

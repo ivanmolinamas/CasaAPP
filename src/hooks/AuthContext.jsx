@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect} from "react";
 import { verifyToken } from "../services/dbconnect";
-import { useNavigate } from "react-router-dom";
+
 
 export const AuthContext = createContext();
 
@@ -8,18 +8,20 @@ export function AuthProvider({ children }) {
     const [authToken, setAuthToken] = useState(localStorage.getItem("token") || null);
     const [user, setUser] = useState(null); // Guarda el usuario autenticado
     const [rol, setRol] = useState(null); // Guarda el usuario autenticado
+    const [id, setId] = useState(null); // Guarda el usuario autenticado
     const [loading, setLoading] = useState(true); // Para manejar el estado de carga
 
     
 
     // Función para iniciar sesión
-    const login = (token, user, rol) => {
+    const login = (token, user, rol, id) => {
      // guardamos los datos del usuario
       setAuthToken(token);
       setUser(user);
       setRol(rol);
+      setId(id);
       localStorage.setItem("token", token);
-      console.log("Login exitoso:", { token, user, rol });
+      console.log("Login exitoso:", { token, user, rol, id });
     };
   
     // Función para cerrar sesión
@@ -40,6 +42,7 @@ export function AuthProvider({ children }) {
           const userData = await verifyToken(); // Verifica el token
           setUser(userData.username); // Guarda los datos del usuario si el token es válido
           setRol(userData.rol); // Guarda los datos del usuario si el token es válido
+          setId(userData.userId); // Guarda los datos del ID usuario si el token es válido
           console.log("userData:", userData);
         } catch (error) {
           console.error(error.message);
@@ -57,7 +60,7 @@ export function AuthProvider({ children }) {
     }, [authToken]);
   
     return (
-      <AuthContext.Provider value={{ authToken, user, rol, login, logout, loading }}>
+      <AuthContext.Provider value={{ authToken, user, id, rol, login, logout, loading }}>
         {children}
       </AuthContext.Provider>
     );

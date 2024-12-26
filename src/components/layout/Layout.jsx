@@ -1,23 +1,11 @@
 import Header from "../header/Header";
 import Content from "../content/Content";
 import classes from "./Layout.module.css";
-import Dashboard from "../../pages/dashboard/dashboard";
-import Login from "../../pages/login/Login";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Auto from "../../pages/auto/Auto";
 import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 
 export default function Layout() {
-  /*
-  <Routes>
-  <Route path="/" element={<Login />} />
-  <Route path="/dashboard" element={<Dashboard />} />
-  <Route element={<ProtectedRoute />}>
-    <Route path="/automatizaciones" element={<Auto />} />
-    <Route path="/config" element={<Config />} />
-  </Route>
-  <Route path="*" element={<Login />} />
-</Routes>*/
   return (
     <main className={classes.main}>
       <div className={classes.header}>
