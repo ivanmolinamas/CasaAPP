@@ -51,6 +51,13 @@
 	cursor: pointer;
 }
 .status{
-	padding-top: 1rem;
+	padding-top: 0px;
 	justify-items: center;
+}
+.tempText{
+	font-size: 3rem;
+	font-weight: bold;
+	color: white;
+	padding: 0px;
+	margin: 0px;
 }

@@ -111,10 +111,10 @@ export default function Config() {
 
   return (
     <div className={classes.container}>
-      <h1>Configuración</h1>
-      <ButtonRa onClick={mostrarUsuarios}>Actualizar tabla Usuarios</ButtonRa>
+      <h1>Administración de usuarios</h1>
       {/* Render la tabla solo si hay usuarios */}
       <h2>Lista de Usuarios</h2>
+      <ButtonRa size="2" onClick={mostrarUsuarios}>Actualizar tabla Usuarios</ButtonRa>
       <div className={classes.tableContainer}>
         {usuarios.length > 0 ? (
           <table className={classes.table}>
