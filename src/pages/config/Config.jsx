@@ -1,8 +1,8 @@
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./Config.module.css";
-import React, { useEffect, useState } from "react";
 import { getPersonalDevices, updatePersonalDevice } from "../../services/adminDevices";
 import { AuthContext } from "../../hooks/AuthContext";
-import { useContext } from "react";
+import ButtonRa from "../../components/button/ButtonRa";
 
 export default function Config() {
   const [devices, setDevices] = useState([]);
@@ -10,14 +10,24 @@ export default function Config() {
   const [error, setError] = useState(null);
   const { id } = useContext(AuthContext);
 
+  // Estado para almacenar datos temporales por dispositivo
+  const [tempData, setTempData] = useState({});
 
   useEffect(() => {
-    // Obtener dispositivos al cargar el componente
     async function fetchDevices() {
-      console.log("id: ", id);
       try {
         const devicesList = await getPersonalDevices(id);
         setDevices(devicesList);
+
+        // Inicializar estado temporal para cada dispositivo
+        const initialTempData = devicesList.reduce((acc, device) => {
+          acc[device.ID_device] = {
+            newName: device.custom_name || "",
+            newType: device.widget_type || "",
+          };
+          return acc;
+        }, {});
+        setTempData(initialTempData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -25,23 +35,45 @@ export default function Config() {
       }
     }
     fetchDevices();
-  }, []);
+  }, [id]);
 
-  const handleUpdateDevice = async (deviceId, customName, widgetType) => {
+  const handleInputChange = (deviceId, field, value) => {
+    setTempData((prev) => ({
+      ...prev,
+      [deviceId]: {
+        ...prev[deviceId],
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleUpdateDevice = async (deviceId) => {
+    const { newName, newType } = tempData[deviceId];
+
     try {
-      const message = await updatePersonalDevice( id, deviceId, customName, widgetType);
+      const message = await updatePersonalDevice(id, deviceId, newName, newType);
       alert(message);
-      // Actualiza la lista de dispositivos localmente después del éxito
+
+      // Actualizar los datos del dispositivo en la lista después del éxito
       setDevices((prevDevices) =>
         prevDevices.map((device) =>
           device.ID_device === deviceId
-            ? { ...device ,custom_name: customName, widget_type: widgetType }
+            ? { ...device, custom_name: newName, widget_type: newType }
             : device
         )
       );
+
+      // Opcional: limpiar los datos temporales después de guardar
+      setTempData((prev) => ({
+        ...prev,
+        [deviceId]: {
+          newName,
+          newType,
+        },
+      }));
     } catch (err) {
-      console.log("Error al actualizar el dispositivo: ", err);
-      alert("Error al actualizar el dispositivo: " + err);
+      console.log("Error updating device: ", err);
+      alert("Error updating device: " + err);
     }
   };
 
@@ -49,8 +81,8 @@ export default function Config() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <h1>Gestión de dispositivos</h1>
+    <div className={classes.container}>
+      <h1>Configuración de dispositivos</h1>
       <table>
         <thead>
           <tr>
@@ -67,25 +99,17 @@ export default function Config() {
               <td>
                 <input
                   type="text"
-                  defaultValue={device.custom_name || ""}
-                  onBlur={(e) =>
-                    handleUpdateDevice(
-                      device.ID_device,
-                      e.target.value,
-                      device.widget_type || ""
-                    )
+                  value={tempData[device.ID_device]?.newName || ""}
+                  onChange={(e) =>
+                    handleInputChange(device.ID_device, "newName", e.target.value)
                   }
                 />
               </td>
               <td>
                 <select
-                  defaultValue={device.widget_type || ""}
+                  value={tempData[device.ID_device]?.newType || ""}
                   onChange={(e) =>
-                    handleUpdateDevice(
-                      device.ID_device,
-                      device.custom_name || "",
-                      e.target.value
-                    )
+                    handleInputChange(device.ID_device, "newType", e.target.value)
                   }
                 >
                   <option value="">Seleccionar</option>
@@ -95,17 +119,12 @@ export default function Config() {
                 </select>
               </td>
               <td>
-                <button
-                  onClick={() =>
-                    handleUpdateDevice(
-                      device.ID_device,
-                      device.custom_name || "",
-                      device.widget_type || ""
-                    )
-                  }
+                <ButtonRa
+                  size="2"
+                  onClick={() => handleUpdateDevice(device.ID_device)}
                 >
                   Guardar
-                </button>
+                </ButtonRa>
               </td>
             </tr>
           ))}
