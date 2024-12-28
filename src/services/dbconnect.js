@@ -40,16 +40,16 @@ export async function crearUsuarioNuevo(user, password, email) {
 export function verifyToken() {
   return new Promise((resolve, reject) => {
     const token = localStorage.getItem("token");
-    console.log("Verificando token:", token);
+    //console.log("Verificando token:", token);
     if (!token) {
       console.log("No token found");
       return reject(new Error("No token found"));
     }
 
     socket.emit("verifyToken", { token }, (response) => {
-      console.log("Respuesta del servidor:", response);
+      //console.log("Respuesta del servidor:", response);
       if (response.status === "success") {
-        console.log("Token verificado:", response);
+        //console.log("Token verificado:", response);
         // Usar los datos para configurar el estado del usuario
         resolve(response.userData); // Devuelve el usuario si el token es válido
       } else {
@@ -65,7 +65,7 @@ export async function getUsers() {
     // Emitimos el evento 'obtenerUsuarios'
     socket.emit("getUsers", (response) => {
       if (response.status === "success") {
-        console.log("Lista de usuarios obtenida:", response.usuarios);
+        //console.log("Lista de usuarios obtenida:", response.usuarios);
         resolve(response.usuarios); // Devuelve la lista de usuarios
       } else {
         console.error(

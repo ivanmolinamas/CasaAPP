@@ -5,9 +5,9 @@ export async function getPersonalDevices(ID) {
   return new Promise((resolve, reject) => {
     // Emitimos el evento para obtener los dispositivos
     socket.emit("getPersonalDevices", { id: ID }, (response) => {
-      console.log("id:  ", ID);
+      console.log("Peticion de dispositivos para id:", ID);
       if (response.status === "success") {
-        console.log("Dispositivos personales obtenidos:", response.devices);
+        //console.log("Dispositivos personales obtenidos:", response.devices);
         resolve(response.devices); // Devuelve la lista de dispositivos
       } else {
         console.error("Error al obtener los dispositivos:", response.error);

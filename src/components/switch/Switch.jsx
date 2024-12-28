@@ -18,8 +18,7 @@ export default function SwitchComp({ idName, deviceID, status, deviceStatus , co
   const toggleDevice = (id) => {
     //toggle(id); // Ejecutamos la función toggle y le pasamos la ID del componente
     toggleLight2(id);
-   // setIsOn(!isOn); //somos optimistas y cambiamos el estado
-    console.log("cambio de estado bombilla", id,"desde switch");
+    //console.log("cambio de estado bombilla", id,"desde switch");
   };
 
   return (

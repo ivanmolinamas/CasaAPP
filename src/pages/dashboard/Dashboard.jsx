@@ -56,7 +56,7 @@ export default function Dashboard() {
     };
   }, []);
 
-  console.log(devices.lights);
+  //console.log(devices.lights);
   return (
     <div className={classes.container}>
       <Grid
