@@ -11,13 +11,12 @@ import Config from "./pages/config/Config";
 import Auto from "./pages/auto/Auto";
 import Admin from "./pages/admin/Admin";
 
-
 function App() {
   //<Layout />
   return (
-    <AuthProvider>
-      <BrowserRouter>
-      <Routes>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
           {/* Ruta pública: Login */}
           <Route path="/" element={<Login />} />
 
@@ -39,8 +38,8 @@ function App() {
           {/* Ruta por defecto (404) */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
