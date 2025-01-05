@@ -24,17 +24,17 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(user, password);
+    //console.log(user, password); // Debug
 
     login(user, password)
       .then((data) => {
-        console.log("Login completado:", data);
+        //console.log("Login completado:", data);
         const token = data.token; // Vamos a guardar el token que llega del backend
         const user = data.user; //guardamos el nombre de usuario
         const rol = data.rol; // Guardamos el rol que tiene el usuario para gestionar sus permisos
         const id = data.id; // Guardamos el rol que tiene el usuario para gestionar sus permisos
         authContext.login(token, user, rol,id ); // LLamamos a la funcion que guardara estos datos 
-        console.log("Token guardado en el contexto:", token);
+        //console.log("Token guardado en el contexto:", token);
         navigate("/dashboard"); //te lleva a dashboard
       })
       .catch((error) => {
@@ -45,18 +45,18 @@ export default function Login() {
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
-    console.log(newUser);
+    //console.log(newUser);
 
     crearUsuarioNuevo(newUser.name ,newUser.password,newUser.email )
       .then((data) => {
-        console.log("usuario creado correctamente", data)
-        console.log(data.user)
+        //console.log("usuario creado correctamente", data)
+        //console.log(data.user)
         const newUserName = data.user;
         setSuccessMessage(`Usuario "${newUserName}" creado correctamente.`);
         setError(null); // Limpia el mensaje de error si existía
       })
       .catch((error) => {
-        console.log("Error en el login: " + error);
+        //console.log("Error en el login: " + error);
         setError(error || "Error inesperado");
       });
   };

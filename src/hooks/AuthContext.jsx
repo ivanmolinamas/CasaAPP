@@ -22,12 +22,12 @@ export function AuthProvider({ children }) {
     setRol(rol);
     setId(id);
     localStorage.setItem("token", token);
-    console.log("Login exitoso:", { token, user, rol, id });
+    //console.log("Login exitoso:", { token, user, rol, id });
   };
 
   // Función para cerrar sesión
   const logout = () => {
-    console.log("logout desde AuthContext");
+    //console.log("logout desde AuthContext");
     setAuthToken(null);
     setUser(null);
     setRol(null);

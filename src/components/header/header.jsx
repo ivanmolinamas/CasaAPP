@@ -8,7 +8,7 @@ export default function Header() {
     <header className={classes.header}>
       <div className={classes.logoMark}>
         <img src="/img/logov1.png" alt="Logo" className={classes.logo} />
-        <Heading color="accent" >Casa APP</Heading>
+        <Heading color="accent" >CasaAPP</Heading>
       </div>
       <Nav />
       <Time />

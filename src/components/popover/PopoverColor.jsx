@@ -17,7 +17,7 @@ export default function PopoverColor({ deviceID, colorTemperature }) {
   }, [colorTemperature]); // El efecto se ejecutará cuando `deviceStatus` cambie
 
   function handleSelect(color) {
-    console.log("handleSelect",deviceID, color);
+    //console.log("handleSelect",deviceID, color);
 	setTemperatureColor(deviceID, color); // Ejecutamos la función toggle y le pasamos la ID del componente
   }
 

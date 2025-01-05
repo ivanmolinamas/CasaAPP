@@ -57,6 +57,7 @@ export default function Dashboard() {
   }, []);
 
   //console.log(devices.lights);
+  //console.log(devices.plugs);
   return (
     <div className={classes.container}>
       <Grid
@@ -120,7 +121,7 @@ export default function Dashboard() {
             <Grid columns="2" gap="2" justify="center" as="div">
               {Object.values(devices.lights).map(
                 (device) =>
-                  device.dimable ? ( // Si es "dimmable", renderiza el componente
+                  device.isDimmable ? ( // Si es "dimmable", renderiza el componente
                     <Dimmer
                       key={device.id} // Es importante añadir una "key" única al iterar en React
                       idName={device.name}

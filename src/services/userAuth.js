@@ -8,11 +8,11 @@ export default function useSocket() {
   });
 
   socket.on("connect", () => {
-    console.log("Conectado a Socket.IO");
+    //console.log("Conectado a Socket.IO");
   });
 
   socket.on("adminEvent", (data) => {
-    console.log(data.message);
+    //console.log(data.message);
   });
 
   socket.on("error", (error) => {

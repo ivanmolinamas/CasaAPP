@@ -1,7 +1,10 @@
 import { io } from "socket.io-client";
 
 // Creamos una única conexión para toda la aplicación
-const socket = io("http://192.168.1.54:4000");
+//DEV
+//const socket = io("http://192.168.1.54:4000");
+//Produ
+const socket = io("http://192.168.1.41:4000");
 
 const connectSocket = () => {
   socket.on("connect", () => {

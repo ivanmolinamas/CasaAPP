@@ -5,7 +5,7 @@ export async function getPersonalDevices(ID) {
   return new Promise((resolve, reject) => {
     // Emitimos el evento para obtener los dispositivos
     socket.emit("getPersonalDevices", { id: ID }, (response) => {
-      console.log("Peticion de dispositivos para id:", ID);
+      //console.log("Peticion de dispositivos para id:", ID);
       if (response.status === "success") {
         //console.log("Dispositivos personales obtenidos:", response.devices);
         resolve(response.devices); // Devuelve la lista de dispositivos
@@ -32,10 +32,10 @@ export async function updatePersonalDevice(
       { id: userID, body: { deviceId, customName, widgetType } },
       (response) => {
         if (response.status === "success") {
-          console.log(
+          /*console.log(
             "Dispositivo actualizado correctamente:",
             response.message
-          );
+          );*/
           resolve(response.message); // Devuelve el mensaje de éxito
         } else {
           console.error("Error al actualizar el dispositivo:", response.error);

@@ -7,7 +7,7 @@ export async function login(user, password) {
     // Emitimos el evento 'login' con los datos del usuario
     socket.emit("login", { user, password }, (response) => {
       if (response.status === "success") {
-        console.log("Login exitoso:", response);
+        //console.log("Login exitoso:", response);
         // Aquí puedo guardar el token en localStorage
         localStorage.setItem("token", response.token);
         localStorage.setItem("rol", response.rol); // Guardamos el rol del usuario
@@ -26,7 +26,7 @@ export async function crearUsuarioNuevo(user, password, email) {
     // Emitimos el evento 'login' con los datos del usuario
     socket.emit("register", { user, email, password }, (response) => {
       if (response.status === "success") {
-        console.log("Usuario creado:", response);
+        //console.log("Usuario creado:", response);
         resolve(response);
       } else {
         console.error("Error al crear el usuario:", response.message);
@@ -83,7 +83,7 @@ export async function removeUser(userID) {
     // Emitimos el evento 'obtenerUsuarios'
     socket.emit("removeUser", { userID }, (response) => {
       if (response.status === "success") {
-        console.log("Usuario eliminado:", response.message);
+        //console.log("Usuario eliminado:", response.message);
         resolve(response.usuarios); // Devuelve la lista de usuarios
       } else {
         console.error(
@@ -102,7 +102,7 @@ export async function toggleUserRole(userID) {
     // Emitimos el evento 'toggleUserRole' con el ID del usuario
     socket.emit("toggleUserRole", { userID }, (response) => {
       if (response.status === "success") {
-        console.log("Rol del usuario actualizado exitosamente:", response.message);
+        //console.log("Rol del usuario actualizado exitosamente:", response.message);
         resolve(response.message); // Resolvemos con el mensaje de éxito
       } else {
         console.error("Error al cambiar el rol del usuario:", response.message);

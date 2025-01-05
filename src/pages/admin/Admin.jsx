@@ -71,7 +71,7 @@ export default function Config() {
   async function cambiarRolUsuario(usuarioID) {
     // Mostrar popup de confirmación antes de borrar
     // TO DO --  debería cambiarse a una ventana mas bonita en el futuro
-    console.log("cambiarRolUsuario :" + usuarioID);
+    //console.log("cambiarRolUsuario :" + usuarioID);
     const confirmDelete = window.confirm(
       "¿Estás seguro de que deseas cambiar el rol del usuario?"
     );
@@ -84,23 +84,23 @@ export default function Config() {
         console.error("Error cambiar el rol del usuario:", error.message);
       }
     } else {
-      console.log("Cambio de rol cancelada");
+      //console.log("Cambio de rol cancelada");
     }
   }
  const handleCreateUser = async (e) => {
     e.preventDefault();
-    console.log(newUser);
+    //console.log(newUser);
 
     crearUsuarioNuevo(newUser.name ,newUser.password,newUser.email )
       .then((data) => {
-        console.log("usuario creado correctamente", data)
-        console.log(data.user)
+        //console.log("usuario creado correctamente", data)
+        //console.log(data.user)
         const newUserName = data.user;
         setSuccessMessage(`Usuario "${newUserName}" creado correctamente.`);
         setError(null); // Limpia el mensaje de error si existía
       })
       .catch((error) => {
-        console.log("Error en el login: " + error);
+        //console.log("Error en el login: " + error);
         setError(error || "Error inesperado");
       });
   };
