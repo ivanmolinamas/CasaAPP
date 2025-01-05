@@ -1,10 +1,10 @@
 import { io } from "socket.io-client";
 
+// Obtenemos la URL del servidor desde las variables de entorno
+const socketURL = process.env.REACT_APP_SOCKET_URL;
+
 // Creamos una única conexión para toda la aplicación
-//DEV
-//const socket = io("http://192.168.1.54:4000");
-//Produ
-const socket = io("http://192.168.1.41:4000");
+const socket = io(socketURL);
 
 const connectSocket = () => {
   socket.on("connect", () => {
