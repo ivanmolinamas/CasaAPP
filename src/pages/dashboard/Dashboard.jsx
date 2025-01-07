@@ -56,15 +56,29 @@ export default function Dashboard() {
     };
   }, []);
 
-  //console.log(devices.lights);
-  //console.log(devices.plugs);
+  console.log(devices.lights);
+  console.log(devices.plugs);
+
+  // Filtrar dispositivos de tipo "switch"
+  const switchDevices = devices.lights.filter(
+    (device) => device.widgetType === "switch"
+  );
+  // Filtrar dispositivos de tipo "slider"
+  const sliderDevices = devices.lights.filter(
+    (device) => device.widgetType === "slider"
+  );
+  // Filtrar dispositivos sin clasificar
+  const restoDevices = devices.lights.filter(
+    (device) => device.widgetType === null
+  );
+
   return (
     <div className={classes.container}>
       <Grid
         columns={{
           initial: "3",
           xl: "3",
-          lg: "3",
+          lg: "2",
           md: "2",
           sm: "1",
         }}
@@ -84,17 +98,11 @@ export default function Dashboard() {
                 xl: "3",
                 lg: "2",
                 md: "2",
+                sm: "3"
               }}
               gap="4"
             >
-              {/**
-               * <SwitchComp idName={"Oficina"}  deviceID={65537} />
-              <SwitchComp idName={"Lampara Cris"} deviceID={65550} />
-              <SwitchComp idName={"Lampara Iván"} deviceID={65551} />
-              <SwitchComp idName={"Mesa 1"} deviceID={65562}/>
-               */}
-
-              {Object.values(devices.lights).map((device) => (
+              {switchDevices.map((device) => (
                 <SwitchComp
                   key={device.id}
                   idName={device.name}
@@ -103,6 +111,15 @@ export default function Dashboard() {
                   deviceStatus={device.onOff}
                   colorTemperature={device.colorTemperature}
                   spectrum={device.spectrum}
+                />
+              ))}
+              {devices.plugs.map((device) => (
+                <SwitchComp
+                  key={device.id}
+                  idName={device.name}
+                  deviceID={device.id}
+                  status={device.onOff}
+                  deviceStatus={device.onOff}
                 />
               ))}
             </Grid>
@@ -117,33 +134,35 @@ export default function Dashboard() {
             justify="center"
             align="center"
           >
-            <Heading size="5">Temperatura</Heading>
+            <Heading size="5">Dimmers</Heading>
             <Grid columns="2" gap="2" justify="center" as="div">
-              {Object.values(devices.lights).map(
-                (device) =>
-                  device.isDimmable ? ( // Si es "dimmable", renderiza el componente
-                    <Dimmer
-                      key={device.id} // Es importante añadir una "key" única al iterar en React
-                      idName={device.name}
-                      deviceID={device.id}
-                      dimmer={device.brightness}
-                      dimmerStatus={device.brightness}
-                    />
-                  ) : null // Si no es "dimable", no renderiza nada
-              )}
+              {sliderDevices.map((device) => (
+                <Dimmer
+                  key={device.id}
+                  idName={device.name}
+                  deviceID={device.id}
+                  dimmer={device.brightness}
+                  dimmerStatus={device.brightness}
+                />
+              ))}
             </Grid>
           </Flex>
         </Box>
 
-        <Box size="3">
-          <Flex direction="column" gap="2" size="3" justify="center">
-            <Heading size="5">Escenas personales</Heading>
-            <ButtonRa>Escena 1 </ButtonRa>
-            <ButtonRa>Escena 2 </ButtonRa>
-            <ButtonRa>Escena 3 </ButtonRa>
-            <ButtonRa>Escena 4 </ButtonRa>
-            <TermoInfo idName={"Salón"} />
-            <TermoInfo idName={"Exterior"} />
+        <Box p="2" size="3">
+          <Flex direction="column" gap="2" size="3"  p="1" justify="center" align="center">
+            <Heading size="5">Sin clasificar</Heading>
+            <Grid columns="2" gap="2" justify="center" as="div">
+              {restoDevices.map((device) => (
+                <SwitchComp
+                  key={device.id}
+                  idName={device.name}
+                  deviceID={device.id}
+                  temperature={device.temperature}
+                  humidity={device.humidity}
+                />
+              ))}
+            </Grid>
           </Flex>
         </Box>
       </Grid>
@@ -151,3 +170,12 @@ export default function Dashboard() {
     </div>
   );
 }
+
+/*
+            <ButtonRa>Escena 1 </ButtonRa>
+            <ButtonRa>Escena 2 </ButtonRa>
+            <ButtonRa>Escena 3 </ButtonRa>
+            <ButtonRa>Escena 4 </ButtonRa>
+            <TermoInfo idName={"Salón"} />
+            <TermoInfo idName={"Exterior"} />
+            */
