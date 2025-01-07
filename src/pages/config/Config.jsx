@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import classes from "./Config.module.css";
-import { getPersonalDevices, updatePersonalDevice } from "../../services/adminDevices";
+import {
+  getPersonalDevices,
+  updatePersonalDevice,
+} from "../../services/adminDevices";
 import { AuthContext } from "../../hooks/AuthContext";
 import ButtonRa from "../../components/button/ButtonRa";
 
@@ -51,7 +54,13 @@ export default function Config() {
     const { newName, newType } = tempData[deviceId];
 
     try {
-      const message = await updatePersonalDevice(id, deviceId, newName, newType);
+      console.log(newType);
+      const message = await updatePersonalDevice(
+        id,
+        deviceId,
+        newName,
+        newType
+      );
       alert(message);
 
       // Actualizar los datos del dispositivo en la lista después del éxito
@@ -101,7 +110,11 @@ export default function Config() {
                   type="text"
                   value={tempData[device.ID_device]?.newName || ""}
                   onChange={(e) =>
-                    handleInputChange(device.ID_device, "newName", e.target.value)
+                    handleInputChange(
+                      device.ID_device,
+                      "newName",
+                      e.target.value
+                    )
                   }
                 />
               </td>
@@ -109,13 +122,18 @@ export default function Config() {
                 <select
                   value={tempData[device.ID_device]?.newType || ""}
                   onChange={(e) =>
-                    handleInputChange(device.ID_device, "newType", e.target.value)
+                    handleInputChange(
+                      device.ID_device,
+                      "newType",
+                      e.target.value
+                    )
                   }
                 >
                   <option value="">Seleccionar</option>
-                  <option value="slider">Slider</option>
+                  {/* Mostrar la opción "slider" solo si el dispositivo es dimmable */}
+                  {device.isDimmable && <option value="slider">Slider</option>}
                   <option value="switch">Switch</option>
-                  <option value="button">Button</option>
+                  {/*<option value="button">Button</option>*/}
                 </select>
               </td>
               <td>
