@@ -155,11 +155,13 @@ export default function Dashboard() {
             <Grid columns="2" gap="2" justify="center" as="div">
               {restoDevices.map((device) => (
                 <SwitchComp
-                  key={device.id}
-                  idName={device.name}
-                  deviceID={device.id}
-                  temperature={device.temperature}
-                  humidity={device.humidity}
+                key={device.id}
+                idName={device.name}
+                deviceID={device.id}
+                status={device.onOff}
+                deviceStatus={device.onOff}
+                colorTemperature={device.colorTemperature}
+                spectrum={device.spectrum}
                 />
               ))}
             </Grid>
