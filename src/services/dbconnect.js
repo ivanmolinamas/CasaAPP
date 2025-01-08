@@ -111,3 +111,18 @@ export async function toggleUserRole(userID) {
     });
   });
 }
+
+// Función para cambiar la contraseña
+export async function changeUserPassword(userID, newPassword) {
+  return new Promise((resolve, reject) => {
+    // Emitimos el evento 'toggleUserRole' con el ID del usuario
+    socket.emit("changePassword", { userID, newPassword }, (response) => {
+      if (response.status === "success") {
+        resolve(response.message); // Resolvemos con el mensaje de éxito
+      } else {
+        console.error("Error al cambiar contraseña usuario:", response.message);
+        reject(new Error(response.message)); // Rechazamos con el mensaje de error
+      }
+    });
+  });
+}

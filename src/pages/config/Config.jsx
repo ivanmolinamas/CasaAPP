@@ -6,6 +6,8 @@ import {
 } from "../../services/adminDevices";
 import { AuthContext } from "../../hooks/AuthContext";
 import ButtonRa from "../../components/button/ButtonRa";
+import { changeUserPassword } from "../../services/dbconnect";
+import DOMPurify from "dompurify";
 
 export default function Config() {
   const [devices, setDevices] = useState([]);
@@ -40,6 +42,7 @@ export default function Config() {
     fetchDevices();
   }, [id]);
 
+  // Función para manejar los cambios en los campos de nombre y tipo de widget
   const handleInputChange = (deviceId, field, value) => {
     setTempData((prev) => ({
       ...prev,
@@ -49,16 +52,17 @@ export default function Config() {
       },
     }));
   };
-
+// Función para actualizar un dispositivo personal
   const handleUpdateDevice = async (deviceId) => {
     const { newName, newType } = tempData[deviceId];
-
+    // Sanitizar el nombre personalizado
+    const sanitizeNewName = DOMPurify.sanitize(newName);
     try {
-      console.log(newType);
+      //console.log(newType);
       const message = await updatePersonalDevice(
         id,
         deviceId,
-        newName,
+        sanitizeNewName,
         newType
       );
       alert(message);
@@ -72,7 +76,7 @@ export default function Config() {
         )
       );
 
-      // Opcional: limpiar los datos temporales después de guardar
+      // limpiamos los datos temporales después de guardar
       setTempData((prev) => ({
         ...prev,
         [deviceId]: {
@@ -81,8 +85,26 @@ export default function Config() {
         },
       }));
     } catch (err) {
-      console.log("Error updating device: ", err);
+      console.error("Error updating device: ", err);
       alert("Error updating device: " + err);
+    }
+  };
+
+  // Función para cambiar la contraseña
+  const handleChangePassword = async () => {
+    // Solicitar nueva contraseña al usuario
+    const newPassword = prompt("Introduce tu nueva contraseña:");
+
+    if (!newPassword) {
+      alert("No se introdujo ninguna contraseña.");
+      return;
+    }
+
+    try {
+      await changeUserPassword(id, newPassword); // Lógica cambiar la contraseña
+      alert("Contraseña cambiada correctamente.");
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error.message);
     }
   };
 
@@ -148,6 +170,16 @@ export default function Config() {
           ))}
         </tbody>
       </table>
+
+      <h1>Cambio de contraseña</h1>
+      <p>Para cambiar de contraseña de usuario pulsa el botón</p>
+      <p>
+        Se mostrará una ventana donde se solicitará la nueva contraseña que
+        deseas usar
+      </p>
+      <ButtonRa onClick={handleChangePassword}>
+        Actualizar contraseña
+      </ButtonRa>
     </div>
   );
 }

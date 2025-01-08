@@ -1,10 +1,11 @@
-import { getUsers, removeUser, toggleUserRole, crearUsuarioNuevo } from "../../services/dbconnect";
+import { getUsers, removeUser, toggleUserRole, crearUsuarioNuevo, changeUserPassword } from "../../services/dbconnect";
 import classes from "./Admin.module.css";
 import { useState, useEffect } from "react";
 import ButtonRa from "../../components/button/ButtonRa";
 import { AuthContext } from "../../hooks/AuthContext";
 import { useContext } from "react";
 import { Button } from "@radix-ui/themes";
+import React from "react";
 
 export default function Config() {
   const [usuarios, setUsuarios] = useState([]); // Estado para almacenar los usuarios
@@ -91,7 +92,12 @@ export default function Config() {
     e.preventDefault();
     //console.log(newUser);
 
-    crearUsuarioNuevo(newUser.name ,newUser.password,newUser.email )
+    // Sanitizamos los datos de entrada para evitar inyección de código
+    const sanitizedUser = DOMPurify.sanitize(newUser.user);
+    const sanitizedPassword = DOMPurify.sanitize(newUser.password);
+    const sanitizedEmail = DOMPurify.sanitize(newUser.email);
+
+    crearUsuarioNuevo(sanitizedUser ,sanitizedPassword,sanitizedEmail )
       .then((data) => {
         //console.log("usuario creado correctamente", data)
         //console.log(data.user)
@@ -108,6 +114,25 @@ export default function Config() {
   useEffect(() => {
     mostrarUsuarios();
   }, []); // El array vacío asegura que se ejecute solo al cargar la página
+
+
+  // Función para cambiar la contraseña
+  const handleChangePassword = async (userID) => {
+    // Solicitar nueva contraseña al usuario
+    const newPassword = prompt("Introduce tu nueva contraseña:");
+
+    if (!newPassword) {
+      alert("No se introdujo ninguna contraseña.");
+      return;
+    }
+
+    try {
+      await changeUserPassword(userID, newPassword); // Lógica cambiar la contraseña
+      alert("Contraseña cambiada correctamente.");
+    } catch (error) {
+      console.error("Error al cambiar la contraseña:", error.message);
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -157,6 +182,13 @@ export default function Config() {
                             </ButtonRa>
                           )
                         }
+                        <ButtonRa
+                          color={"orange"}
+                          size="2"
+                          onClick={() =>  handleChangePassword(usuario.id)}
+                        >
+                          Restablecer contraseña
+                        </ButtonRa>
                         <ButtonRa
                           color={"red"}
                           size="2"

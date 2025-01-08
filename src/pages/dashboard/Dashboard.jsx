@@ -46,7 +46,7 @@ export default function Dashboard() {
     socket.on("devicesState", (data) => {
       setDevices({
         lights: data.lights,
-        plugs: data.plugs,
+        plugs: data.plugs, // De momento, los enchufes no pueden ser controlados
       });
     });
 
@@ -56,8 +56,9 @@ export default function Dashboard() {
     };
   }, []);
 
-  console.log(devices.lights);
-  console.log(devices.plugs);
+  // Debug de los dispositivos
+  // console.log(devices.lights);
+  // console.log(devices.plugs);
 
   // Filtrar dispositivos de tipo "switch"
   const switchDevices = devices.lights.filter(
@@ -113,15 +114,7 @@ export default function Dashboard() {
                   spectrum={device.spectrum}
                 />
               ))}
-              {devices.plugs.map((device) => (
-                <SwitchComp
-                  key={device.id}
-                  idName={device.name}
-                  deviceID={device.id}
-                  status={device.onOff}
-                  deviceStatus={device.onOff}
-                />
-              ))}
+              
             </Grid>
           </Flex>
         </Box>
