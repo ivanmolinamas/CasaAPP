@@ -14,8 +14,12 @@ import Admin from "./pages/admin/Admin";
 function App() {
   //<Layout />
   return (
+    
     <BrowserRouter>
+    {/* BrowserRouter envuelve toda la aplicación */}
+    {/* AuthProvider envuelve toda la aplicación */}
       <AuthProvider>
+        {/* Routes envuelve todas las rutas de la aplicación */}
         <Routes>
           {/* Ruta pública: Login */}
           <Route path="/" element={<Login />} />
