@@ -6,6 +6,7 @@ import { AuthContext } from "../../hooks/AuthContext";
 import { useContext } from "react";
 import { Button } from "@radix-ui/themes";
 import React from "react";
+import DOMPurify from "dompurify"; // Sanitizador de datos
 
 export default function Config() {
   const [usuarios, setUsuarios] = useState([]); // Estado para almacenar los usuarios
@@ -93,10 +94,10 @@ export default function Config() {
     //console.log(newUser);
 
     // Sanitizamos los datos de entrada para evitar inyección de código
-    const sanitizedUser = DOMPurify.sanitize(newUser.user);
+    const sanitizedUser = DOMPurify.sanitize(newUser.name); //correcion aqui
     const sanitizedPassword = DOMPurify.sanitize(newUser.password);
     const sanitizedEmail = DOMPurify.sanitize(newUser.email);
-
+    //console.log(sanitizedUser, sanitizedPassword, sanitizedEmail); //debug mode
     crearUsuarioNuevo(sanitizedUser ,sanitizedPassword,sanitizedEmail )
       .then((data) => {
         //console.log("usuario creado correctamente", data)
@@ -162,7 +163,8 @@ export default function Config() {
                     <td>{usuario.rol}</td>
                     <td>
                       <div className={classes.flexGap}>
-                        {
+                        { // ocultamos los botones de cambiar rol para admin
+                        usuario.user === "admin" ? null : (
                           // Mostrar botón para convertir en usuario o admin según el rol actual
                           usuario.rol === "admin" ? (
                             <ButtonRa
@@ -181,21 +183,28 @@ export default function Config() {
                               Convertir en Admin
                             </ButtonRa>
                           )
+                        )
                         }
                         <ButtonRa
                           color={"orange"}
                           size="2"
                           onClick={() =>  handleChangePassword(usuario.id)}
                         >
-                          Restablecer contraseña
+                          Cambiar contraseña
                         </ButtonRa>
-                        <ButtonRa
-                          color={"red"}
-                          size="2"
-                          onClick={() => borrarUsuario(usuario.id)}
-                        >
-                          Eliminar
-                        </ButtonRa>
+                        {
+                          // ocultamos el botón de eliminar para admin
+                          usuario.user === "admin" ? null : (
+                            <ButtonRa
+                            color={"red"}
+                            size="2"
+                            onClick={() => borrarUsuario(usuario.id)}
+                          >
+                            Eliminar
+                          </ButtonRa>  
+                          )
+                        }
+                        
                       </div>
                     </td>
                   </tr>
